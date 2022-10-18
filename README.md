@@ -24,6 +24,6 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 | Role                      | Membre          |
 | ------------------------- | --------------- |
-| Backend engineer          | Lorenzo La Mura |
-| Frontend engineer         | Bastien Meffre  |
-| Site reliability engineer | Mattia La Mura  |
+| Backend engineer          | Lorenzo LA MURA |
+| Frontend engineer         | Bastien MEFFRE  |
+| Site reliability engineer | Mattia LA MURA  |
