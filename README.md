@@ -10,10 +10,10 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 > la première séance. L'identifiant vous sera renseigné via une
 > Pull Request plus tard.
 
-|             |        |
-| ----------- | ------ |
-| Nom         | _FILL_ |
-| Identifiant | _FILL_ |
+|             |         |
+| ----------- | ------- |
+| Nom         | Baloma™ |
+| Identifiant | _FILL_  |
 
 <br>
 
@@ -22,8 +22,8 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 > :warning: Veuillez remplir la section suivante avec les membres de
 > votre équipe.
 
-| Role                      | Membre |
-| ------------------------- | ------ |
-| Backend engineer          | _FILL_ |
-| Frontend engineer         | _FILL_ |
-| Site reliability engineer | _FILL_ |
+| Role                      | Membre          |
+| ------------------------- | --------------- |
+| Backend engineer          | Lorenzo La Mura |
+| Frontend engineer         | Bastien Meffre  |
+| Site reliability engineer | Mattia La Mura  |
