@@ -1,7 +1,7 @@
 """ This class is a database wrapper. It contains several
  functions to easily interact with the database. """
 import mysql.connector as sql
-from environment_variable import Settings
+from src.classes.environment_variable import Settings
 
 
 class Database:

@@ -1,9 +1,9 @@
 """ This file contains all the **Backend routes**. """
 from fastapi import FastAPI, status, HTTPException
-from api_metadata import DESCRIPTION, TAGS_METADATA
-from classes.artist import get_all_artists
-from classes.album import get_albums_from_artist
-from classes.song import get_songs_from_album
+from src.api_metadata import DESCRIPTION, TAGS_METADATA
+from src.classes.artist import get_all_artists
+from src.classes.album import get_albums_from_artist
+from src.classes.song import get_songs_from_album
 
 # Initialize the API
 app = FastAPI(title='Jean Cloud Vinil API', description=DESCRIPTION, openapi_tags=TAGS_METADATA)

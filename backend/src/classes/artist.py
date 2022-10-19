@@ -1,7 +1,7 @@
 # pylint: disable=too-few-public-methods, no-name-in-module
 """ This file contains all the functions to get an artist. """
 from pydantic import BaseModel, Field
-from database import Database
+from src.classes.database import Database
 
 
 class Artist(BaseModel):

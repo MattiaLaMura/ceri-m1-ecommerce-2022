@@ -2,7 +2,7 @@
 """ This file contains all the functions to get a song. """
 from typing import Optional
 from pydantic import BaseModel, Field
-from database import Database
+from src.classes.database import Database
 
 
 class Song(BaseModel):
