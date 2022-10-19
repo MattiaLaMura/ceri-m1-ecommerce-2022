@@ -1,6 +1,7 @@
 # pylint: disable=too-few-public-methods, no-name-in-module
 """ This file contains all the functions to get an artist. """
 from pydantic import BaseModel, Field
+from database import Database
 
 
 class Artist(BaseModel):
@@ -16,4 +17,7 @@ def get_all_artists():
     :return: The list of all the artists
     :rtype: list[Artist]
     """
-    return ['a', 'b', 'c']
+    my_database = Database()
+    artists = my_database.get_artists()
+    my_database.close()
+    return [Artist(**artist) for artist in artists]

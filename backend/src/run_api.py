@@ -1,6 +1,6 @@
 """ This file contains all the **Backend routes**. """
 from fastapi import FastAPI, status, HTTPException
-from api_metatdata import DESCRIPTION, TAGS_METADATA
+from api_metadata import DESCRIPTION, TAGS_METADATA
 from classes.artist import get_all_artists
 from classes.album import get_albums_from_artist
 from classes.song import get_songs_from_album
