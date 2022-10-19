@@ -10,10 +10,10 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 > la première séance. L'identifiant vous sera renseigné via une
 > Pull Request plus tard.
 
-|             |         |
-| ----------- | ------- |
-| Nom         | Baloma™ |
-| Identifiant | _FILL_  |
+|             |            |
+| ----------- | ---------- |
+| Nom         | Baloma™    |
+| Identifiant | purplepig  | 🐷
 
 <br>
 
