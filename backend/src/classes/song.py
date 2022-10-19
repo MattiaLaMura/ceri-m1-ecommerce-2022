@@ -1,4 +1,4 @@
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods, no-name-in-module
 """ This file contains all the functions to get a song. """
 from typing import Optional
 from pydantic import BaseModel, Field

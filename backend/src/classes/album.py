@@ -1,8 +1,8 @@
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods, no-name-in-module
 """ This file contains all the functions to get an album. """
 from typing import Optional
-from pydantic import BaseModel, Field
 from datetime import date
+from pydantic import BaseModel, Field
 from database import Database
 
 
