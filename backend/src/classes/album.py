@@ -8,10 +8,10 @@ from database import Database
 
 class Album(BaseModel):
     """ This class is used to stock an album. """
-    id: Optional[int] = Field(default=None, primary_key=True)
+    album_id: Optional[int] = Field(default=None, primary_key=True)
     artist_id: int
-    name: str
-    year: date
+    album_title: str
+    album_year: date
 
 
 def get_albums_from_artist(artist_id: int):

@@ -7,10 +7,10 @@ from database import Database
 
 class Song(BaseModel):
     """ This class is used to stock a song. """
-    id: Optional[int] = Field(default=None, primary_key=True)
+    song_id: Optional[int] = Field(default=None, primary_key=True)
     album_id: int
-    title: str
-    length: str
+    song_title: str
+    song_length: str
 
 
 def get_songs_from_album(album_id: int):
