@@ -1,9 +1,9 @@
 # build stage
 FROM node:lts-alpine as build-stage
 WORKDIR /app
-COPY ./frontend/package*.json ./
+COPY ./frontend/vue-project/package*.json ./
 RUN npm install
-COPY ./frontend .
+COPY ./frontend/vue-project .
 RUN npm run build
 
 # production stage
