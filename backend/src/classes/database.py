@@ -1,6 +1,7 @@
 """ This class is a database wrapper. It contains several
  functions to easily interact with the database. """
 import mysql.connector as sql
+from environment_variable import Settings
 
 
 class Database:
@@ -10,10 +11,10 @@ class Database:
         """ The constructor from the Database class. When this constructor is called,
         a connection with the database is open. """
         # Open connection
-        self.connection = sql.connect(user='user',
-                                      password='password',
-                                      host='host',
-                                      dbname='dbname')
+        self.connection = sql.connect(user=Settings.USER,
+                                      password=Settings.PASSWORD,
+                                      host=Settings.HOST,
+                                      dbname=Settings.DBNAME)
         # Create a cursor to perform database operations
         self.cursor = self.connection.cursor(dictionary=True)
 
