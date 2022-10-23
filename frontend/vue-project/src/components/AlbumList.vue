@@ -8,15 +8,31 @@ export default{
     data(){
         return {
             Album:[
-                {nom:'album1'},
-                {nom:'album2'},
-                {nom:'album3'},
-                {nom:'album1'},
-                {nom:'album2'},
-                {nom:'album3'},
-                {nom:'album1'},
-                {nom:'album2'},
-                {nom:'album3'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                {nom:'album'},
+                
             ]
         }
     },
@@ -28,9 +44,15 @@ export default{
 </script>
 
 <template>
-    <div class="container mt-3">
-        <div class="p-2" v-for="album in Album" :key="album.id">
-            <Album :nom="album.nom"></Album>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="p-2" v-for="(album, index) in Album" :key="album.id">
+                    <Album :nom="album.nom" :imageIndex="index+1"></Album>
+                </div>
+            </div>
+            <div class="col-2"></div>
         </div>
     </div>
 </template>
