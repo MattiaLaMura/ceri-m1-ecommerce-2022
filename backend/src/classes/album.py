@@ -3,7 +3,7 @@
 from typing import Optional
 from datetime import date
 from pydantic import BaseModel, Field
-from src.classes.database import Database
+from src.database.database import Database
 
 
 class Album(BaseModel):

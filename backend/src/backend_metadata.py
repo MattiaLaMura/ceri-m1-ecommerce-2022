@@ -1,12 +1,20 @@
 """ This file contains all the **Metadata** information for the *Backend*. """
 
-# The API description
+# The Backend description
 DESCRIPTION = """ **Jean Cloud Vinil API** is the *Backend* of the main Web Site. """
 
 TAGS_METADATA = [
     {
         'name': 'Health Check',
         'description': 'This route **checks** if the *Backend is running*.',
+    },
+    {
+        'name': 'Create Database',
+        'description': 'This route **creates** the Backend *database*.',
+    },
+    {
+        'name': 'Fill Database',
+        'description': 'This route **fills** the Backend *database*.',
     },
     {
         'name': 'Get Artists',

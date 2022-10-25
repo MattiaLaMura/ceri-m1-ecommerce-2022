@@ -5,7 +5,8 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     """ This class is used to stock the environment variables. """
-    USER: str
-    PASSWORD: str
-    HOST: str
-    DBNAME: str
+    user: str
+    password: str
+    host: str
+    port: str
+    dbname: str

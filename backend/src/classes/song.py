@@ -2,7 +2,7 @@
 """ This file contains all the functions to get a song. """
 from typing import Optional
 from pydantic import BaseModel, Field
-from src.classes.database import Database
+from src.database.database import Database
 
 
 class Song(BaseModel):
@@ -20,6 +20,6 @@ def get_songs_from_album(album_id: int):
     :rtype: list[Song]
     """
     my_database = Database()
-    songs = my_database.get_albums(str(album_id))
+    songs = my_database.get_songs(str(album_id))
     my_database.close()
     return [Song(**song) for song in songs]
