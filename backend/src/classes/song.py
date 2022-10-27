@@ -10,7 +10,7 @@ class Song(BaseModel):
     song_id: Optional[int] = Field(default=None, primary_key=True)
     album_id: int
     song_title: str
-    song_length: str
+    song_length: int
 
 
 def get_songs_from_album(album_id: int):

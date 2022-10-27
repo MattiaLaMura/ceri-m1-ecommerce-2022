@@ -1,7 +1,7 @@
 """ This file contains all the **Metadata** information for the *Backend*. """
 
 # The Backend description
-DESCRIPTION = """ **Jean Cloud Vinil API** is the *Backend* of the main Web Site. """
+DESCRIPTION = """ **Jean Cloud Vinyl API** is the *Backend* of the main Web Site. """
 
 TAGS_METADATA = [
     {
