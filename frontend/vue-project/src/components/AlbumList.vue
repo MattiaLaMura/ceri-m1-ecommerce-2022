@@ -8,30 +8,30 @@ export default{
     data(){
         return {
             Album:[
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
-                {nom:'album'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
+                {nom:'album',artist:'artist'},
                 
             ]
         }
@@ -48,9 +48,11 @@ export default{
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <div class="p-2" v-for="(album, index) in Album" :key="album.id">
-                    <Album :nom="album.nom" :imageIndex="index+1"></Album>
-                </div>
+                <div class="row">
+                    <div class="p-4 col-lg-4" v-for="(album, index) in Album" :key="album.id">
+                        <Album :nom="album.nom" :artist="album.artist" :imageIndex="index+1"></Album>
+                    </div>
+               </div>
             </div>
             <div class="col-2"></div>
         </div>
