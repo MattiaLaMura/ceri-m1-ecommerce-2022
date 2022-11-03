@@ -1,15 +1,9 @@
 <script setup>
 
-import AlbumList from './components/AlbumList.vue';
-import Header from './components/Header.vue';
-
 </script>
 
 <template>
-
-    <Header/>
-    <AlbumList/>
-  
+    <router-view/>
 </template>
 
 <style >

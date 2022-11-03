@@ -25,6 +25,9 @@ export default{
                 this.isSticky=false
                 this.title = ""
             }
+        },
+        scrollToTop() {
+            window.scrollTo(0,0);
         }
     }
 }
@@ -35,8 +38,9 @@ export default{
         
         <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
-            
-            <li class="nav-item"><a href="#" class="nav-link text-white" aria-current="page">Home</a></li>
+
+            <router-link v-on:click="scrollToTop()" to="/" class="nav-link text-white" aria-current="page" >Home</router-link>
+        
             <li class="nav-item"><a href="#" class="nav-link text-white">Features</a></li>
             <li class="nav-item"><a href="#" class="nav-link text-white">Pricing</a></li>
             <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
@@ -51,5 +55,6 @@ export default{
 .container{
     position: sticky;
     top: 0px;
+    z-index:100;
 }
 </style>
