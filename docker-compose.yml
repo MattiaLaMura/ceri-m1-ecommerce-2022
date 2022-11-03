@@ -11,15 +11,15 @@ services:
       - "8000"
     env_file:
       - .env
-  #frontend:
-  #  build:
-  #    context: .
-  #    dockerfile: frontend.Dockerfile
-  #  command: nginx -g 'daemon off;'
-  #  ports:
-  #    - "8001:80"
-  #  expose:
-  #    - "8001"
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    command: nginx -g 'daemon off;'
+    ports:
+      - "8001:80"
+    expose:
+      - "8001"
   # The credentials are visibles because this database is just a test and it will be removed
   db:
     image: mysql:8.0
