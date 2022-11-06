@@ -2,13 +2,27 @@
 
 [![slack](https://img.shields.io/badge/slack-join-yellow.svg?logo=slack)](https://join.slack.com/t/cerim1ecommer-qy81374/shared_invite/zt-1hgh8de7q-v1Mb4g6rwPH6yNzmU7bKNA)
 
-Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecommerce-2022/tree/main/docs).
+To run the project, you need to create a **.env** file in the *root* folder and copy the following lines:
+```text
+USER=DB_user_name
+PASSWORD=DB_password
+HOST=DB_host
+PORT=DB_port
+DBNAME=DB_name
+```
+This file will be used to stock the environment variables and pass them to the ```docker-compose```.
+
+To build and run it, you just need to execute the following command:
+```shell
+docker-compose up --build -d   
+```
+The **Backend** is now accessible on the following *url*:
+> localhost:8000
+
+The **FrontEnd** is now accessible on the following **url**:
+> localhost:8001
 
 ## Dream team
-
-> :warning: Veuillez remplir le nom de votre équipe avant la fin de
-> la première séance. L'identifiant vous sera renseigné via une
-> Pull Request plus tard.
 
 |             |            |
 | ----------- | ---------- |
@@ -19,8 +33,6 @@ Les instructions sont disponibles [ici](https://github.com/Faylixe/ceri-m1-ecomm
 
 ### Staff
 
-> :warning: Veuillez remplir la section suivante avec les membres de
-> votre équipe.
 
 | Role                      | Membre          |
 | ------------------------- | --------------- |
