@@ -1,5 +1,6 @@
 """ This file contains all the **Backend routes**. """
 from fastapi import FastAPI, status, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from src.backend_metadata import DESCRIPTION, TAGS_METADATA
 from src.classes.artist import get_all_artists
 from src.classes.album import get_albums_from_artist
@@ -8,6 +9,13 @@ from src.database.database import Database
 
 # Initialize the API
 app = FastAPI(title='Jean Cloud Vinyl Backend', description=DESCRIPTION, openapi_tags=TAGS_METADATA)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[''],
+    allow_credentials=True,
+    allow_methods=[''],
+    allow_headers=['*'],
+)
 
 
 @app.get('/', tags=['Health Check'], status_code=status.HTTP_200_OK)
