@@ -11,9 +11,9 @@ from src.database.database import Database
 app = FastAPI(title='Jean Cloud Vinyl Backend', description=DESCRIPTION, openapi_tags=TAGS_METADATA)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[''],
+    allow_origins=['*'],
     allow_credentials=True,
-    allow_methods=[''],
+    allow_methods=['*'],
     allow_headers=['*'],
 )
 
