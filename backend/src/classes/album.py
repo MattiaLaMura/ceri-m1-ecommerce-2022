@@ -12,6 +12,7 @@ class Album(BaseModel):
     artist_id: int
     album_title: str
     album_year: date
+    album_image_url: str
 
 
 def get_albums_from_artist(artist_id: int):
