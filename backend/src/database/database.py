@@ -67,15 +67,27 @@ class Database:
         image_1 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/99bd31fd-b68e-4fa6-b351-62173827ac21/67.jpg'
         image_2 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/6b2ef062-6913-4a94-a265-7d75f4f91854/64.jpg'
         image_3 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/e2f9aa74-7587-4a30-b0c0-4df61d7ac308/43.jpg'
+        image_4 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/edc90e2d-6cb0-47e1-9617-afc44e8c4649/kisschasycover.jpg'
+        image_5 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/33bba1b0-fe1f-4fbb-85a8-db3f23fb9db2/63.jpg'
+        image_6 = 'https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/98ed95d4-f11d-4c14-9ce7-03060d0265cc/ground-control-eye-brow.jpg'
         self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
                             'VALUES ((select artist_id FROM artist WHERE artist_id '
                             '= 1), "Album de Lorenzo", "2022-10-21", "' + image_1 + '");')
         self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
                             'VALUES ((select artist_id FROM artist WHERE artist_id '
+                            '= 1), "Album de Lorenzo 2", "2022-11-30", "' + image_4 + '");')
+        self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
+                            'VALUES ((select artist_id FROM artist WHERE artist_id '
                             '= 2), "Album de Mattia", "2018-12-06", "' + image_2 + '");')
         self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
                             'VALUES ((select artist_id FROM artist WHERE artist_id '
+                            '= 2), "Album de Mattia 2", "2019-10-01", "' + image_5 + '");')
+        self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
+                            'VALUES ((select artist_id FROM artist WHERE artist_id '
                             '= 3), "Album de Bastien", "2021-01-13", "' + image_3 + '");')
+        self.cursor.execute('INSERT INTO album (artist_id, album_title, album_year, album_image_url) '
+                            'VALUES ((select artist_id FROM artist WHERE artist_id '
+                            '= 3), "Album de Bastien 2", "2022-03-25", "' + image_6 + '");')
 
     def get_albums(self, artist_id: str):
         """ This method gets all the albums of an artist.
@@ -92,6 +104,7 @@ class Database:
     # Song Table
     def fill_song_table(self):
         """ This method fills the song table. """
+        # Lorenzo Album 1
         self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
                             'VALUES ((select album_id FROM album WHERE album_id '
                             '= 1), "Song 1", 153);')
@@ -100,16 +113,75 @@ class Database:
                             '= 1), "Song 2", 121);')
         self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
                             'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 1), "Song 3", 189);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 1), "Song 4", 95);')
+        # Lorenzo Album 2
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
                             '= 2), "Song 1", 153);')
         self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
                             'VALUES ((select album_id FROM album WHERE album_id '
                             '= 2), "Song 2", 121);')
         self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
                             'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 2), "Song 3", 189);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 2), "Song 4", 95);')
+        # Mattia Album 1
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
                             '= 3), "Song 1", 153);')
         self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
                             'VALUES ((select album_id FROM album WHERE album_id '
                             '= 3), "Song 2", 121);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 3), "Song 3", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 3), "Song 4", 121);')
+        # Mattia Album 2
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 4), "Song 1", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 4), "Song 2", 121);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 4), "Song 3", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 4), "Song 4", 121);')
+        # Bastien Album 1
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 5), "Song 1", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 5), "Song 2", 121);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 5), "Song 3", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 5), "Song 4", 121);')
+        # Bastien Album 2
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 6), "Song 1", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 6), "Song 2", 121);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 6), "Song 3", 153);')
+        self.cursor.execute('INSERT INTO song (album_id, song_title, song_length) '
+                            'VALUES ((select album_id FROM album WHERE album_id '
+                            '= 6), "Song 4", 121);')
 
     def get_songs(self, album_id: str):
         """ This method gets all the songs of an album.
