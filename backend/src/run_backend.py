@@ -8,7 +8,9 @@ from src.classes.song import get_songs_from_album
 from src.database.database import Database
 
 # Initialize the API
-app = FastAPI(title='Jean Cloud Vinyl Backend', description=DESCRIPTION, openapi_tags=TAGS_METADATA)
+app = FastAPI(title='Jean Cloud Vinyl Backend',
+              description=DESCRIPTION,
+              openapi_tags=TAGS_METADATA)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
