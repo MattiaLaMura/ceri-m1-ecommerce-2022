@@ -13,8 +13,16 @@ TAGS_METADATA = [
         'description': 'This route **creates** the Backend *database*.',
     },
     {
-        'name': 'Fill Database',
-        'description': 'This route **fills** the Backend *database*.',
+        'name': 'Add Artist',
+        'description': 'This route **adds** a new *artist* in the *database*.',
+    },
+    {
+        'name': 'Add Album',
+        'description': 'This route **adds** a new *album* in the *database*.',
+    },
+    {
+        'name': 'Add Song',
+        'description': 'This route **adds** a new *song* in the *database*.',
     },
     {
         'name': 'Get Artists',
