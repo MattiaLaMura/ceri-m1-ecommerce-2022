@@ -26,3 +26,20 @@ CREATE TABLE IF NOT EXISTS song (
         REFERENCES album (album_id)
         ON UPDATE RESTRICT ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS user (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS item (
+    item_id INT AUTO_INCREMENT,
+    album_id INT,
+    user_id INT,
+    paid BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (item_id, album_id, user_id),
+    FOREIGN KEY (album_id) REFERENCES album (album_id)
+    FOREIGN KEY (user_id) REFERENCES user (user_id)
+);
