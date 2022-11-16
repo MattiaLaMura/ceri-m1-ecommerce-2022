@@ -10,11 +10,15 @@ HOST=DB_host
 PORT=DB_port
 DBNAME=DB_name
 ```
-This file will be used to stock the environment variables and pass them to the ```docker-compose```.
+This file will be used to stock the environment variables and pass them to the ```docker run --env-file```.
 
-To build and run it, you just need to execute the following command:
+To build and run it, you just need to execute the following commands:
 ```shell
-docker-compose up --build -d   
+docker run -d -p 3306:3306 --name db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db mysql
+
+docker build -t backend -f backend.Dockerfile . && docker run -d --name backend --env-file .env -p 8000:22 backend
+
+docker build -t frontend -f frontend.Dockerfile . && docker run -d --name frontend --env-file .env -p 8001:80 frontend
 ```
 The **Backend** is now accessible on the following *url*:
 > localhost:8000
