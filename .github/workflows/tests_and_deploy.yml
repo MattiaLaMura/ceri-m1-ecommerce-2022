@@ -23,8 +23,8 @@ jobs:
         run: |
           pylint --fail-under=9 backend/.
 
-#  build:
-#    needs: unit_test
+  build:
+    needs: unit_test
 #    europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig
 
   deploy:
