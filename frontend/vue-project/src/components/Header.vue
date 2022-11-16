@@ -1,35 +1,20 @@
 <script>
+// import ConnexionModal from './ConnexionModal.vue'
 export default{
-    data() {
-        return {
-            isSticky: false,
-            stickyClass: 'is_sticky',
-            scrollPosition:0,
-            title: 'fds'
-        }
-    },
-    created () {
-            window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed () {
-            window.removeEventListener('scroll', this.handleScroll);
-    },
     methods:{
-        handleScroll(event){
-            this.scrollPosition = window.scrollY
-            if(this.scrollPosition>=300){
-                this.title = "Jean Cloud Vinyl"
-                this.isSticky=true
-                console.log(this.isSticky)
-            }else{
-                this.isSticky=false
-                this.title = ""
-            }
-        },
         scrollToTop() {
             window.scrollTo(0,0);
-        }
-    }
+        },
+        // test(){
+        //     console.log(this.showModal)
+        // }
+    },
+    // components: { ConnexionModal },
+    // data() {
+    //     return {
+    //     showModal: false,
+    //     }
+    // },
 }
 </script>
 
@@ -39,16 +24,15 @@ export default{
         <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
 
-            <router-link v-on:click="scrollToTop()" to="/" class="nav-link text-white" aria-current="page" >Home</router-link>
-        
-            <li class="nav-item"><a href="#" class="nav-link text-white">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-white">Pricing</a></li>
+            <router-link v-on:click="scrollToTop()" to="/" class="nav-link text-white" aria-current="page" >Accueil</router-link>
+            
             <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-white">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link text-white">A propos</a></li>
+            <!-- <a href="#" class="nav-link text-white" v-on:click="showModal = true" >Connexion</a> -->
         </ul>
         </header>
     </div>
-
+    <!-- <ConnexionModal v-show="showModal" /> -->
 </template>
 
 <style scoped>

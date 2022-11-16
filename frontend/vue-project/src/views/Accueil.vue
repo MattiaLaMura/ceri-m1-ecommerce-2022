@@ -1,7 +1,7 @@
 <script setup>
 
-import AlbumList from '@/components/AlbumList.vue';
-import Header from '@/components/Header.vue';
+import AlbumList from '/src/components/AlbumList.vue';
+import Header from '/src/components/Header.vue';
 
 </script>
 

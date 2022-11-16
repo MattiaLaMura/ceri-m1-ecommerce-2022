@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Accueil from "@/views/Accueil.vue"
-import DetailItem from "@/views/DetailItem.vue"
+import Accueil from "/src/views/Accueil.vue"
+import DetailItem from "/src/views/DetailItem.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -12,15 +12,9 @@ const router = createRouter({
         },
         {
             name: 'detailItem',
-            path: '/item/:nomAlbum',
+            path: '/item/:idAlbum',
             component: DetailItem,
             props: true
-        },
-        {
-           
-            path: '/item',
-            component: DetailItem
-
         }
     ]
 })

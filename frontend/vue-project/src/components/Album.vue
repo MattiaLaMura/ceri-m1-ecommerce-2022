@@ -1,13 +1,15 @@
 <script>
 export default{
     setup() {
-        const imageUrl = new URL("../assets/images/albums/", import.meta.url).href;
-        return { imageUrl };
+        // const imageUrl = new URL("images/albums/", import.meta.url).href;
+        // return { imageUrl };
     },
     props: {
-     nom: { required: true, type: String },
-     imageIndex :{ required: true, type: Int32Array },
-     artist: { required: true, type: String }
+        nomAlbum: { required: true, type: String },
+        idAlbum : { required: true },
+        imageIndex :{ required: true },
+        artist: { required: true, type: String },
+        imageAlbum: { required: true, type: String }
     },
     methods:{
         goToDetailItem(nom){
@@ -19,29 +21,14 @@ export default{
 </script>
 
 <template>
-    <router-link :to="{name : 'detailItem', params: { nomAlbum: imageIndex } }">
-        <!-- <router-link to="/item" v-slot="{navigate}">
-        kk
-        </router-link> -->
-        <!-- <div v-on:click="goToDetailItem(imageIndex)" class="p-4 bg-dark rounded-3 cursor_hover">
-            <img v-bind:src="imageUrl+imageIndex+'.jpg'" class="img img-fluid">
-            <div class="text-center text-white">
-                {{nom}} {{imageIndex}}
-            </div>
-            <div class="text-center text-white">
-                {{artist}} {{imageIndex}}
-            </div>
-            
-        </div> -->
-
-       
+    <router-link :to="{name : 'detailItem', params: {idAlbum: idAlbum} }">
         <div class="card bg-dark">
-            <img v-bind:src="imageUrl+imageIndex+'.jpg'" class=" img-fluid card-img-top">
+            <img v-bind:src=imageAlbum class=" img-fluid card-img-top">
             <div class="card-title">
-                <h5 class="card-text text-center text-white py-3">{{nom}} {{imageIndex}}</h5>
+                <h5 class="card-text text-center text-white py-3">{{nomAlbum}} </h5>
             </div>
             <div class="card-text">
-                <div class="card-text text-center text-white">{{artist}} {{imageIndex}}</div>
+                <div class="card-text text-center text-white">{{artist}}</div>
             </div>
         </div>
       
@@ -58,9 +45,6 @@ img {
 }
 a { 
     text-decoration: none; 
-}
-.cursor_hover{
-    cursor:pointer;
 }
 
 .card-img-top {

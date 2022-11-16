@@ -1,12 +1,12 @@
 <script>
 
 
-import Header from '@/components/Header.vue';
-import AlbumDetails from '@/components/AlbumDetails.vue';
+import Header from '/src/components/Header.vue';
+import AlbumDetails from '/src/components/AlbumDetails.vue';
 
 
 export default {
-    props: ["nomAlbum"],
+    props: ["idAlbum"],
     components: { Header, AlbumDetails }
 }
 
@@ -15,8 +15,8 @@ export default {
 
 <template>
     <Header/>
-    <AlbumDetails :nomAlbum = "nomAlbum"/>
-    <div>{{nomAlbum}}</div>
+    <AlbumDetails :idAlbum = "idAlbum"/>
+    
   
 </template>
 
