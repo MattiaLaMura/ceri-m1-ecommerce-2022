@@ -43,13 +43,13 @@ def create_database():
 
 
 @app.post('/signup', tags=['Sign Up'], status_code=status.HTTP_200_OK)
-def sign_up(user_email: str, user_password: str):
+def sign_up(user_name: str, user_email: str, user_password: str):
     """ This route creates and add a new user in the database. """
     if not verify_email(user_email):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='The email is not valid or it has already been taken.')
     password = get_password_hash(user_password)
-    create_user(user_email, password)
+    create_user(user_name, user_email, password)
     return {'message': 'The user have been created.'}
 
 
@@ -108,7 +108,7 @@ def add_song(album_id: int, song_title: str, song_length: int):
 @app.get('/add/item', tags=['Add Item'], status_code=status.HTTP_200_OK)
 def add_item(album_id: int, paid: bool, current_user: User = Depends(get_current_user)):
     """ This route adds a new item in the database. """
-    add_item(album_id, current_user.user_id, paid)
+    create_item(album_id, current_user.user_id, paid)
     return {'message': 'A new item has been added to the database.'}
 
 
@@ -155,8 +155,9 @@ def get_all_items(current_user: User = Depends(get_current_user)):
 @app.get('/buy/items', tags=['Buy Item'], status_code=status.HTTP_200_OK)
 def pay_items(item_id: int, current_user: User = Depends(get_current_user)):
     """ This route allows the user to buy an item. """
-    buy_item(item_id, current_user.user_id)
-    return {'message': 'The item has been bought.'}
+    if buy_item(item_id, current_user.user_id):
+        return {'message': 'The item has been bought.'}
+    return {'message': 'The item cannot be bought.'}
 
 
 @app.get('/remove/item', tags=['Remove Item'], status_code=status.HTTP_200_OK)

@@ -50,8 +50,11 @@ def buy_item(item_id: int, user_id: int):
     :type item_id: int
     """
     my_database = Database()
-    my_database.buy_item(item_id, user_id)
+    item_bought = my_database.buy_item(item_id, user_id)
     my_database.close()
+    if item_bought == 1:
+        return True
+    return False
 
 
 def delete_item(item_id: int, user_id: int):

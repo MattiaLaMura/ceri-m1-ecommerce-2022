@@ -1,7 +1,6 @@
 # pylint: disable=too-few-public-methods
 """ This file contains the class to stock the environment variables. """
 from pydantic import BaseSettings
-from environment_variable import Settings
 
 
 class Settings(BaseSettings):

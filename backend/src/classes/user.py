@@ -1,6 +1,6 @@
 # pylint: disable=no-name-in-module, too-few-public-methods
 """ This file contains all the functions to add, get and check an user. """
-from validate_email import validate_email
+# from validate_email import validate_email
 from pydantic import BaseModel
 from passlib.context import CryptContext
 from src.database.database import Database
@@ -17,12 +17,12 @@ class User(BaseModel):
     user_password: str
 
 
-def create_user(user_email, user_name, password):
+def create_user(user_name, user_email, password):
     """ This method adds a new user in the database.
 
     :param user_email: The user email
     :type user_email: str
-    :param user_name: The user name
+    :param user_name: The username
     :type user_name: str
     :param password: The hashed password
     :type password: str
@@ -115,6 +115,6 @@ def verify_email(email):
     my_database.close()
     if exist:
         return False  # If the email is already in the database
-    if not validate_email(email, verify=True):
-        return False  # Email not valid
+    # if not validate_email(email, verify=True):
+        # return False  # Email not valid
     return True
