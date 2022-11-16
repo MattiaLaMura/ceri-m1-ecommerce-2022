@@ -1,10 +1,11 @@
 terraform {
-    cloud {
-        organization = "your organization name"
-        workspace {
-            name = " your workspace name"
-        }
+  cloud {
+    organization = "team-purplepig"
+
+    workspaces {
+      name = "ceri-m2-ecommerce"
     }
+  }
 }
 
 provider "google" {
