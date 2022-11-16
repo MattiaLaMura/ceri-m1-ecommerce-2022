@@ -14,8 +14,8 @@ jobs:
       
       - name: Tests with unittest
         run: |
-          pip install --no-cache-dir --upgrade -r requirements.txt
-          pip install -e .
+          pip install --no-cache-dir --upgrade -r backend/requirements.txt
+          pip install -e backend/.
           python backend/se
           python backend/tests/unit_tests.py
      
