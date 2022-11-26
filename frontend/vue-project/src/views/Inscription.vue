@@ -8,7 +8,17 @@ import Header from '/src/components/Header.vue';
 <template>
 
     <Header/>
-    <InscriptionForm/>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <InscriptionForm/>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+        
+    
   
 </template>
 

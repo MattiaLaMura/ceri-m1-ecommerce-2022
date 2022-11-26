@@ -19,9 +19,7 @@ export default {
             <button type="submit" class="btn btn-primary p-2 buttonConnection">Se connecter</button>
             <div class="p-2">
                 <p>Pas encore de compte?</p>
-                <button type="submit" class="btn btn-primary buttonInscription">S'inscrire</button>
-                <router-link to="/inscription" class="nav-link text-white" aria-current="page" >Accueil</router-link>
-            
+                <router-link to="/inscription" class="btn btn-primary buttonInscription text-white" aria-current="page"  >S'inscrire</router-link>
             </div>
         </form>
       </div>

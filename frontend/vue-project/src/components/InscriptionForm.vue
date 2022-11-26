@@ -5,23 +5,23 @@ export default {
 
 <template>
     
-  <h2>Inscription</h2>
-  <form>
-      <div class="form-group p-2">
+  <h2 class="text-center text-white">Inscription</h2>
+  <form >
+      <div class="form-group p-2 text-white">
           <label for="exampleInputEmail1">Nom d'utilisateur</label>
           <input type="username" class="form-control" id="InputUsername" placeholder="Entrez votre nom d'utilisateur">
       </div>
-      <div class="form-group p-2">
+      <div class="form-group p-2 text-white">
           <label for="exampleInputPassword1">Mot de passe</label>
           <input type="password" class="form-control" id="InputPassword" placeholder="Entrez votre mot de passe">
       </div>
-      <div class="form-group p-2">
-          <label for="exampleInputPassword1">Mot de passe</label>
-          <input type="password" class="form-control" id="InputPassword" placeholder="Entrez votre mot de passe">
+      <div class="form-group p-2 text-white">
+          <label for="exampleInputPassword1">Confirmation mot de passe</label>
+          <input type="password" class="form-control" id="InputPassword" placeholder="Confirmation mot de passe">
       </div>
-      <div class="p-2">
-          <p>Pas encore de compte?</p>
-          <button type="submit" class="btn btn-primary buttonInscription">S'inscrire</button>
+      <div class="p-4 d-flex justify-content-center">
+          <!-- <button type="submit" class="btn btn-primary buttonInscription text-center ">Créé mon compte</button> -->
+          <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link>
       </div>
   </form>
 </template>
@@ -29,7 +29,6 @@ export default {
 
 
 <style scoped>
-
 
 h6 {
   font-weight: 500;
@@ -53,7 +52,7 @@ p {
 }
 
 .buttonInscription {
-  background-color: #000000;
+  background-color: #dc6e00;
   width: 150px;
   height: 40px;
   color: white;
