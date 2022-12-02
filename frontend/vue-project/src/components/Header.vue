@@ -32,6 +32,7 @@ export default{
             <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
             <li class="nav-item"><a href="#" class="nav-link text-white">A propos</a></li>
             <a href="#" class="nav-link text-white" v-on:click="showModal = true" >Connexion</a>
+            <router-link v-on:click="scrollToTop()" to="/" class="nav-link text-white" aria-current="page" >Accueil</router-link>
         </ul>
         </header>
     </div>

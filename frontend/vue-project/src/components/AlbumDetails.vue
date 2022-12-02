@@ -72,7 +72,10 @@ export default{
                                 </div>
                             </div>
                 </div>
+                <button type="submit" class="btn buttonPanier text-center ">Ajouter au panier</button>
             </div>
+
+
         </div>
    </div>
 </template>
@@ -90,4 +93,12 @@ img {
     object-fit: cover;
 }
 
+.buttonPanier {
+  background-color: #dc6e00;
+  width: 150px;
+  height: 40px;
+  color: white;
+  font-size: 14px;
+  border-radius: 16px;
+}
 </style>

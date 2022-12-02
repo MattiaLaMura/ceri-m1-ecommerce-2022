@@ -1,5 +1,47 @@
 <script>
+import axios from 'axios'
 export default {
+  data() {
+    return {
+      email: "",
+      password:""
+    }
+  },
+  methods:{
+        // token(username, password){
+        //   username.replace('@', '%40');
+        //   url = 'http://host.docker.internal:8002/token';
+        //   headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+        //   data = 'grant_type=&username=' + username + '&password=' + password + '&scope=&client_id=&client_secret=';
+        //   response = requests.post(url=url, headers=headers, data=data);
+        //   if response.status_code != 200{
+        //       print('It does not work...')
+        //       return None
+        //   }
+        //   access_token = response.json()['access_token']
+        //   return access_token
+        // }
+
+        async connexion(submitEvent){
+
+          this.email = submitEvent.target.elements.email.value;
+          this.password = submitEvent.target.elements.password.value;
+
+          this.email.replace('@', '%40')
+
+          const url = 'http://host.docker.internal:8000/token?'
+          const headers = { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          };
+        
+          const param = 'grant_type=&username=' + this.email.replace('@', '%40') + '&password=' + this.password+ '&scope=&client_id=&client_secret=';
+          const response = await axios.post(url ,param, {headers})
+          
+          
+          console.log(response.data)
+        }
+    }
 }
 </script>
 
@@ -7,14 +49,14 @@ export default {
     <div class="modal-overlay" @click="$emit('close-modal')">
       <div class="modals" @click.stop>
         <h2>Connexion</h2>
-        <form>
+        <form @submit.prevent="connexion">
             <div class="form-group p-2">
-                <label for="exampleInputEmail1">Nom d'utilisateur</label>
-                <input type="username" class="form-control" id="InputUsername" placeholder="Entrez votre nom d'utilisateur">
+                <label for="exampleInputEmail1">Adresse email</label>
+                <input type="username" class="form-control" id="InputUsername" name="email" placeholder="Entrez votre adresse email">
             </div>
             <div class="form-group p-2">
                 <label for="exampleInputPassword1">Mot de passe</label>
-                <input type="password" class="form-control" id="InputPassword" placeholder="Entrez votre mot de passe">
+                <input type="password" class="form-control" id="InputPassword" name="password" placeholder="Entrez votre mot de passe">
             </div>
             <button type="submit" class="btn btn-primary p-2 buttonConnection">Se connecter</button>
             <div class="p-2">

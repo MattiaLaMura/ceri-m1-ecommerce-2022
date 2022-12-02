@@ -3,6 +3,8 @@
 import InscriptionForm from '/src/components/InscriptionForm.vue';
 import Header from '/src/components/Header.vue';
 
+
+
 </script>
 
 <template>
