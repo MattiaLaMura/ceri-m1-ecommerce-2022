@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Accueil from "/src/views/Accueil.vue"
 import DetailItem from "/src/views/DetailItem.vue"
 import Inscription from "/src/views/Inscription.vue"
+import Panier from "/src/views/Panier.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -21,6 +22,11 @@ const router = createRouter({
             name: 'inscription',
             path: '/inscription',
             component: Inscription
+        },
+        {
+            name: 'panier',
+            path: '/panier',
+            component: Panier
         }
     ]
 })

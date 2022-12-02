@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -29,7 +30,7 @@ export default {
 
           this.email.replace('@', '%40')
 
-          const url = 'http://host.docker.internal:8000/token?'
+          const url = 'http://host.docker.internal:8000/token'
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -38,8 +39,33 @@ export default {
           const param = 'grant_type=&username=' + this.email.replace('@', '%40') + '&password=' + this.password+ '&scope=&client_id=&client_secret=';
           const response = await axios.post(url ,param, {headers})
           
+          if(response.data != null){
+            const token = response.data.access_token
           
-          console.log(response.data)
+            console.log(token)
+
+            // Recupere donnees de l'utilisateur
+            const urlCurrentUser = "http://host.docker.internal:8000/get/current/user"
+            const headersCurrentUser = { 
+              'Accept': 'application/json',
+              'Authorization': 'Bearer ' + token
+            };
+            const responseCurrentUser = await axios.get(urlCurrentUser, {
+              headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+              }});
+            if(responseCurrentUser.data != null){
+              localStorage.setItem('user_name', responseCurrentUser.data.current_user.user_name)
+              localStorage.setItem('user_email', responseCurrentUser.data.current_user.user_email)
+              localStorage.setItem('user_id', responseCurrentUser.data.current_user.user_id)
+              localStorage.setItem('user_token', response.data.access_token)
+              // Connexion réussie, ferme le formulaire
+              this.$emit('close-modal')
+              this.$emit('updateHeader')
+            }
+            console.log(responseCurrentUser.data.current_user.user_name)
+          } else console.log("error connexion")
         }
     }
 }
@@ -61,7 +87,7 @@ export default {
             <button type="submit" class="btn btn-primary p-2 buttonConnection">Se connecter</button>
             <div class="p-2">
                 <p>Pas encore de compte?</p>
-                <router-link to="/inscription" class="btn btn-primary buttonInscription text-white" aria-current="page"  >S'inscrire</router-link>
+                <router-link  to="/inscription" class="btn btn-primary buttonInscription text-white" aria-current="page"  @click="$emit('close-modal')">S'inscrire</router-link>
             </div>
         </form>
       </div>

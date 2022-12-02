@@ -1,5 +1,7 @@
 <script>
+import axios from 'axios'
 export default{
+    
     setup() {
         // const imageUrl = new URL("images/albums/", import.meta.url).href;
         // return { imageUrl };
@@ -9,7 +11,23 @@ export default{
         imageIndex :{ required: false, type: Int32Array },
     },
     methods:{
-        
+        async ajoutPanier(){
+            const token = localStorage.getItem('user_token')
+            
+            // Recupere donnees de l'utilisateur
+            const urlAjoutPanier = "http://host.docker.internal:8000/add/item?"
+            const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
+            const headersAjoutPanier = { 
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+            };
+            const responseAjoutPanier= await axios.get(urlAjoutPanier + paramAjourPanier, {
+                headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + token
+                }});
+            console.log(responseAjoutPanier.data)
+        }
     },
     data(){
         return {
@@ -47,8 +65,8 @@ export default{
                 }
             }
         }
-
-    }
+    },
+    
 
 }
 </script>
@@ -72,7 +90,7 @@ export default{
                                 </div>
                             </div>
                 </div>
-                <button type="submit" class="btn buttonPanier text-center ">Ajouter au panier</button>
+                <button v-on:click="ajoutPanier()" type="submit" class="btn buttonPanier text-center ">Ajouter au panier</button>
             </div>
 
 
