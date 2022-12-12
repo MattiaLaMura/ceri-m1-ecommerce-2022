@@ -9,7 +9,9 @@ from src.classes.artist import get_all_artists
 from src.classes.album import get_albums_from_artist
 from src.classes.song import get_songs_from_album
 from src.classes.item import create_item, get_items, buy_item, delete_item
-from src.classes.token import Token, create_access_token, get_current_user
+from src.classes.token import Token, create_access_token, get_current_user, \
+    get_current_admin
+from src.classes.admin import Admin, authentication as admin_authentication
 from src.classes.user import authentication, get_password_hash, \
     verify_email, get_users, create_user, User
 from src.database.database import Database
@@ -66,9 +68,23 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
                         detail='The email or password is incorrect.')
 
 
+@app.post('/token_backoffice', tags=['Token BackOffice'], response_model=Token)
+async def login_for_access_token_2(form_data: OAuth2PasswordRequestForm = Depends()):
+    """ This route takes a name, a password and it returns a token. """
+    admin = admin_authentication(form_data.username, form_data.password)
+    if admin:
+        token = create_access_token(data={'name': admin.admin_name},
+                                    expires_delta=datetime.timedelta(
+                                        minutes=TOKEN_EXPIRE_MINUTES))
+        return {'access_token': token, 'token_type': 'bearer'}
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                        detail='The name or password is incorrect.')
+
+
 @app.get('/get/users', tags=['Get Users'], status_code=status.HTTP_200_OK)
-def get_all_users():
+def get_all_users(current_admin: Admin = Depends(get_current_admin)):
     """ This route gets all the users from the database. """
+    print("Hello admin " + current_admin.admin_name)
     return {'users': get_users()}
 
 
@@ -78,9 +94,25 @@ def get_user_current(current_user: User = Depends(get_current_user)):
     return {'current_user': current_user}
 
 
+@app.get('/get/current/admin', tags=['Get Current Admin'], status_code=status.HTTP_200_OK)
+def get_admin_current(current_admin: Admin = Depends(get_current_admin)):
+    """ This route gets all the information of the current admin. """
+    return {'current_admin': current_admin}
+
+
+@app.get('/get/orders', tags=['Get Orders'], status_code=status.HTTP_200_OK)
+def get_orders(user_id: int, current_admin: Admin = Depends(get_current_admin)):
+    """ This route gets all the orders of an user from the database. """
+    print("Hello admin " + current_admin.admin_name)
+    orders = get_items(user_id)
+    return {'orders': orders}
+
+
 @app.get('/add/artist', tags=['Add Artist'], status_code=status.HTTP_200_OK)
-def add_artist(artist_name: str, is_active: bool):
+def add_artist(artist_name: str, is_active: bool,
+               current_admin: Admin = Depends(get_current_admin)):
     """ This route adds a new artist in the database. """
+    print("Hello admin " + current_admin.admin_name)
     my_database = Database()
     my_database.add_artist(artist_name, is_active)
     my_database.close()
@@ -88,8 +120,10 @@ def add_artist(artist_name: str, is_active: bool):
 
 
 @app.get('/add/album', tags=['Add Album'], status_code=status.HTTP_200_OK)
-def add_album(artist_id: int, album_title: str, album_year: datetime.date, album_cover: str):
+def add_album(artist_id: int, album_title: str, album_year: datetime.date, album_cover: str,
+              current_admin: Admin = Depends(get_current_admin)):
     """ This route adds a new album in the database. """
+    print("Hello admin " + current_admin.admin_name)
     my_database = Database()
     my_database.add_album(artist_id, album_title, album_year, album_cover)
     my_database.close()
@@ -97,8 +131,10 @@ def add_album(artist_id: int, album_title: str, album_year: datetime.date, album
 
 
 @app.get('/add/song', tags=['Add Song'], status_code=status.HTTP_200_OK)
-def add_song(album_id: int, song_title: str, song_length: int):
+def add_song(album_id: int, song_title: str, song_length: int,
+             current_admin: Admin = Depends(get_current_admin)):
     """ This route adds a new song in the database. """
+    print("Hello admin " + current_admin.admin_name)
     my_database = Database()
     my_database.add_song(album_id, song_title, song_length)
     my_database.close()

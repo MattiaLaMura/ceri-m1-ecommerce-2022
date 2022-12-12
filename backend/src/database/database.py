@@ -91,6 +91,20 @@ class Database:
             'SELECT * from song WHERE album_id=%s', (album_id,))
         return self.cursor.fetchall()
 
+    # Admin Table
+    def get_admin_by_name(self, name):
+        """ This method gets an admin using a name.
+
+        :param name: The admin name
+        :type name: str
+        :return: The admin information
+        :rtype: dict
+        """
+        self.cursor.execute(
+            'SELECT * from admin WHERE admin_name = %s', (name,))
+        admin = self.cursor.fetchone()
+        return admin
+
     # User Table
     def add_user(self, user_email, user_name, user_password):
         """ This method adds a new user in the database.
@@ -123,7 +137,8 @@ class Database:
         :return: The user information
         :rtype: dict
         """
-        self.cursor.execute('SELECT * from user WHERE user_email = %s', (email,))
+        self.cursor.execute(
+            'SELECT * from user WHERE user_email = %s', (email,))
         user = self.cursor.fetchone()
         return user
 
