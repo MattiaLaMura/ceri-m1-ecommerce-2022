@@ -45,3 +45,9 @@ CREATE TABLE IF NOT EXISTS item (
         FOREIGN KEY (user_id)
             REFERENCES user (user_id)
 );
+
+CREATE TABLE IF NOT EXISTS admin (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_name VARCHAR(255) NOT NULL,
+    admin_password VARCHAR(255) NOT NULL
+);
