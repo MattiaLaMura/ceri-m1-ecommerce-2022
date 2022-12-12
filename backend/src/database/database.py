@@ -105,6 +105,18 @@ class Database:
         admin = self.cursor.fetchone()
         return admin
 
+    def add_admin(self, admin_name, admin_password):
+        """ This method adds a new user in the database.
+
+        :param admin_name: The admin name
+        :type admin_name: str
+        :param admin_password: The hashed password of the admin
+        :type admin_password: str
+        """
+        self.cursor.execute('INSERT into admin (admin_name, admin_password) values '
+                            '(%s, %s)', (admin_name, admin_password))
+        self.connection.commit()
+
     # User Table
     def add_user(self, user_email, user_name, user_password):
         """ This method adds a new user in the database.
@@ -218,7 +230,7 @@ class Database:
         :param status: The item status
         :type status: str
         """
-        self.cursor.execute(f'UPDATE item SET delivery = {status} WHERE user_id = {user_id}'
+        self.cursor.execute(f'UPDATE item SET delivery = "{status}" WHERE user_id = {user_id}'
                             f' and item_id = {item_id}')
         self.connection.commit()
         return self.cursor.rowcount

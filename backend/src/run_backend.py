@@ -11,7 +11,7 @@ from src.classes.song import get_songs_from_album
 from src.classes.item import create_item, get_items, buy_item, delete_item, update_item
 from src.classes.token import Token, create_access_token, get_current_user, \
     get_current_admin
-from src.classes.admin import Admin, authentication as admin_authentication
+from src.classes.admin import Admin, create_admin, authentication as admin_authentication
 from src.classes.user import authentication, get_password_hash, \
     verify_email, get_users, create_user, User
 from src.database.database import Database
@@ -52,7 +52,15 @@ def sign_up(user_name: str, user_email: str, user_password: str):
                             detail='The email is not valid or it has already been taken.')
     password = get_password_hash(user_password)
     create_user(user_name, user_email, password)
-    return {'message': 'The user have been created.'}
+    return {'message': 'The user has been created.'}
+
+
+@app.post('/add/admin', tags=['Add Admin'], status_code=status.HTTP_200_OK)
+def add_admin(admin_name: str, admin_password: str):
+    """ This route creates and add a new admin in the database. """
+    password = get_password_hash(admin_password)
+    create_admin(admin_name, password)
+    return {'message': 'The admin has been created.'}
 
 
 @app.post('/token', tags=['Token'], response_model=Token)

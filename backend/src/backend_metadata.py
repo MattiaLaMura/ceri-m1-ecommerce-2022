@@ -17,6 +17,10 @@ TAGS_METADATA = [
         'description': 'This route **adds** a *new user* in the database.',
     },
     {
+        'name': 'Add Admin',
+        'description': 'This route **adds** a *new admin* in the database.',
+    },
+    {
         'name': 'Token',
         'description': 'This route takes an *email*, a *password*, and it returns a **token**.',
     },

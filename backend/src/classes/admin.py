@@ -15,6 +15,19 @@ class Admin(BaseModel):
     admin_password: str
 
 
+def create_admin(admin_name, password):
+    """ This method adds a new admin in the database.
+
+    :param admin_name: The admin name
+    :type admin_name: str
+    :param password: The hashed password
+    :type password: str
+    """
+    my_database = Database()
+    my_database.add_admin(admin_name, password)
+    my_database.close()
+
+
 def get_admin(name: str):
     """ This method gets an admin by its name.
 

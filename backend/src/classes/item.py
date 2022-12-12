@@ -83,6 +83,8 @@ def update_item(item_id: int, user_id: int, status: str):
     :type user_id: int
     :param item_id: The item id
     :type item_id: int
+    :param status: The status of the order
+    :type status: str
     """
     my_database = Database()
     item_updated = my_database.update_item(item_id, user_id, status)
