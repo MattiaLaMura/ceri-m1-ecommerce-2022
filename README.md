@@ -9,6 +9,7 @@ PASSWORD=DB_password
 HOST=DB_host
 PORT=DB_port
 DBNAME=DB_name
+SECRET_KEY=key
 ```
 This file will be used to stock the environment variables and pass them to the ```docker run --env-file```.
 
