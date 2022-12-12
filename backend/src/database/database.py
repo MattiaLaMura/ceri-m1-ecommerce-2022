@@ -90,3 +90,103 @@ class Database:
         self.cursor.execute(
             'SELECT * from song WHERE album_id=%s', (album_id,))
         return self.cursor.fetchall()
+
+    # User Table
+    def add_user(self, user_email, user_name, user_password):
+        """ This method adds a new user in the database.
+
+        :param user_email: The user email
+        :type user_email: str
+        :param user_name: The user name
+        :type user_name: str
+        :param user_password: The hashed password of the user
+        :type user_password: str
+        """
+        self.cursor.execute('INSERT into user (user_email, user_name, user_password) values '
+                            '(%s, %s, %s)', (user_email, user_name, user_password))
+        self.connection.commit()
+
+    def get_users(self):
+        """ This method gets all the users from the database.
+
+        :return: The list of all the users
+        :rtype: list[dict]
+        """
+        self.cursor.execute('SELECT * from user')
+        return self.cursor.fetchall()
+
+    def get_user_by_email(self, email):
+        """ This method gets a user using an email.
+
+        :param email: The User email
+        :type email: str
+        :return: The user information
+        :rtype: dict
+        """
+        self.cursor.execute('SELECT * from user WHERE user_email = %s', (email,))
+        user = self.cursor.fetchone()
+        return user
+
+    def get_email_by_email(self, email):
+        """ This method gets an email using an email.
+        This is used to check if an email is valid or not.
+
+        :return: The user email that has been found
+        :rtype: dict
+        """
+        self.cursor.execute(
+            'SELECT user_email from user WHERE user_email = %s', (email,))
+        return self.cursor.fetchone()
+
+    # Item Table
+    def add_item(self, album_id, user_id, paid):
+        """ This method adds a new item in the database.
+
+        :param user_id: The user id
+        :type user_id: int
+        :param album_id: The album id
+        :type album_id: int
+        :param paid: if the item is still on the cart or not
+        :type paid: bool
+        """
+        self.cursor.execute('INSERT INTO item (album_id, user_id, paid) '
+                            f'VALUES ((select album_id FROM album WHERE album_id = {album_id}), '
+                            f'(select user_id FROM user WHERE user_id = {user_id}), {paid});')
+        self.connection.commit()
+
+    def get_items(self, user_id: int):
+        """ This method gets all the items information.
+
+        :param user_id: The user id
+        :type user_id: int
+        """
+        self.cursor.execute(f'SELECT * from item where user_id = {user_id}')
+        return self.cursor.fetchall()
+
+    def buy_item(self, item_id: int, user_id: int):
+        """ This method adds a new item in the database.
+
+        :param user_id: The user id
+        :type user_id: int
+        :param item_id: The item id
+        :type item_id: int
+        """
+        self.cursor.execute(f'UPDATE item SET paid = TRUE WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
+        self.connection.commit()
+        return self.cursor.rowcount
+
+    def delete_item(self, item_id: int, user_id: int):
+        """ This method removes an item from the database.
+
+        :param user_id: The id of the user, owner of the item
+        :type user_id: int
+        :param item_id: The id of the item that will be removed
+        :type item_id: int
+        :return: 1 if the user has been deleted, 0 if not
+        :rtype: int
+        """
+        self.cursor.execute(f'DELETE from item WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
+        self.connection.commit()
+        return self.cursor.rowcount

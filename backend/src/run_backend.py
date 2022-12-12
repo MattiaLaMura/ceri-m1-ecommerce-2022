@@ -1,11 +1,17 @@
-""" This file contains all the **Backend routes**. """
+""" This file contains all the Backend routes. """
 import datetime
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, status, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordRequestForm
+from globals import TOKEN_EXPIRE_MINUTES
 from src.backend_metadata import DESCRIPTION, TAGS_METADATA
 from src.classes.artist import get_all_artists
 from src.classes.album import get_albums_from_artist
 from src.classes.song import get_songs_from_album
+from src.classes.item import create_item, get_items, buy_item, delete_item
+from src.classes.token import Token, create_access_token, get_current_user
+from src.classes.user import authentication, get_password_hash, \
+    verify_email, get_users, create_user, User
 from src.database.database import Database
 
 # Initialize the API
@@ -36,6 +42,42 @@ def create_database():
     return {'message': 'The database has been created.'}
 
 
+@app.post('/signup', tags=['Sign Up'], status_code=status.HTTP_200_OK)
+def sign_up(user_name: str, user_email: str, user_password: str):
+    """ This route creates and add a new user in the database. """
+    if not verify_email(user_email):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail='The email is not valid or it has already been taken.')
+    password = get_password_hash(user_password)
+    create_user(user_name, user_email, password)
+    return {'message': 'The user have been created.'}
+
+
+@app.post('/token', tags=['Token'], response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    """ This route takes an email, a password and it returns a token. """
+    user = authentication(form_data.username, form_data.password)
+    if user:
+        token = create_access_token(data={'email': user.user_email},
+                                    expires_delta=datetime.timedelta(
+                                        minutes=TOKEN_EXPIRE_MINUTES))
+        return {'access_token': token, 'token_type': 'bearer'}
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                        detail='The email or password is incorrect.')
+
+
+@app.get('/get/users', tags=['Get Users'], status_code=status.HTTP_200_OK)
+def get_all_users():
+    """ This route gets all the users from the database. """
+    return {'users': get_users()}
+
+
+@app.get('/get/current/user', tags=['Get Current User'], status_code=status.HTTP_200_OK)
+def get_user_current(current_user: User = Depends(get_current_user)):
+    """ This route gets all the information of the current user. """
+    return {'current_user': current_user}
+
+
 @app.get('/add/artist', tags=['Add Artist'], status_code=status.HTTP_200_OK)
 def add_artist(artist_name: str, is_active: bool):
     """ This route adds a new artist in the database. """
@@ -61,6 +103,13 @@ def add_song(album_id: int, song_title: str, song_length: int):
     my_database.add_song(album_id, song_title, song_length)
     my_database.close()
     return {'message': 'A new song has been added to the database.'}
+
+
+@app.get('/add/item', tags=['Add Item'], status_code=status.HTTP_200_OK)
+def add_item(album_id: int, paid: bool, current_user: User = Depends(get_current_user)):
+    """ This route adds a new item in the database. """
+    create_item(album_id, current_user.user_id, paid)
+    return {'message': 'A new item has been added to the database.'}
 
 
 @app.get('/get/artists', tags=['Get Artists'], status_code=status.HTTP_200_OK)
@@ -94,3 +143,26 @@ def get_songs(album_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=str(exc)) from exc
     return {'songs': songs}
+
+
+@app.get('/get/items', tags=['Get Items'], status_code=status.HTTP_200_OK)
+def get_all_items(current_user: User = Depends(get_current_user)):
+    """ This route gets all the items of an user from the database. """
+    items = get_items(current_user.user_id)
+    return {'items': items}
+
+
+@app.get('/buy/items', tags=['Buy Item'], status_code=status.HTTP_200_OK)
+def pay_items(item_id: int, current_user: User = Depends(get_current_user)):
+    """ This route allows the user to buy an item. """
+    if buy_item(item_id, current_user.user_id):
+        return {'message': 'The item has been bought.'}
+    return {'message': 'The item cannot be bought.'}
+
+
+@app.get('/remove/item', tags=['Remove Item'], status_code=status.HTTP_200_OK)
+def remove_item(item_id: int, current_user: User = Depends(get_current_user)):
+    """ This route allows the user to remove an item. """
+    if delete_item(item_id, current_user.user_id):
+        return {'message': 'The item has been removed.'}
+    return {'message': 'The item cannot be removed.'}

@@ -1,6 +1,11 @@
 """ Global variables. """
 import os
 
+# Encode algorithm for JWT
+ALGORITHM = 'HS256'
+# Token expiration time
+TOKEN_EXPIRE_MINUTES = 15
+
 # Root Path
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 # Src Path

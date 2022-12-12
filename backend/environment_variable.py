@@ -10,3 +10,4 @@ class Settings(BaseSettings):
     host: str
     port: str
     dbname: str
+    secret_key: str
