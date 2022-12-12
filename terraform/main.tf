@@ -78,15 +78,6 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
-        env {
-          name = "SECRET_KEY"
-          value_from {
-            secret_key_ref{
-              name = data.google_secret_manager_secret.jwtkey.secret_id
-              key = "latest"
-            }
-          }
-        }
       }
     }
     metadata {
