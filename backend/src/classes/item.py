@@ -10,6 +10,7 @@ class Item(BaseModel):
     album_id: int
     user_id: int
     paid: bool
+    delivery: str
 
 
 def create_item(album_id: int, user_id: int, paid: bool):
@@ -71,5 +72,21 @@ def delete_item(item_id: int, user_id: int):
     item_deleted = my_database.delete_item(item_id, user_id)
     my_database.close()
     if item_deleted == 1:
+        return True
+    return False
+
+
+def update_item(item_id: int, user_id: int, status: str):
+    """ This method updates an item in the database.
+
+    :param user_id: The user id
+    :type user_id: int
+    :param item_id: The item id
+    :type item_id: int
+    """
+    my_database = Database()
+    item_updated = my_database.update_item(item_id, user_id, status)
+    my_database.close()
+    if item_updated == 1:
         return True
     return False

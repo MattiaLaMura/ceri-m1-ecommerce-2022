@@ -164,9 +164,9 @@ class Database:
         :param paid: if the item is still on the cart or not
         :type paid: bool
         """
-        self.cursor.execute('INSERT INTO item (album_id, user_id, paid) '
+        self.cursor.execute('INSERT INTO item (album_id, user_id, paid, delivery) '
                             f'VALUES ((select album_id FROM album WHERE album_id = {album_id}), '
-                            f'(select user_id FROM user WHERE user_id = {user_id}), {paid});')
+                            f'(select user_id FROM user WHERE user_id = {user_id}), {paid}, " ");')
         self.connection.commit()
 
     def get_items(self, user_id: int):
@@ -188,6 +188,8 @@ class Database:
         """
         self.cursor.execute(f'UPDATE item SET paid = TRUE WHERE user_id = {user_id}'
                             f' and item_id = {item_id}')
+        self.cursor.execute(f'UPDATE item SET delivery = "En cours" WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
         self.connection.commit()
         return self.cursor.rowcount
 
@@ -202,6 +204,21 @@ class Database:
         :rtype: int
         """
         self.cursor.execute(f'DELETE from item WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
+        self.connection.commit()
+        return self.cursor.rowcount
+
+    def update_item(self, item_id: int, user_id: int, status: str):
+        """ This method updates an item in the database.
+
+        :param user_id: The user id
+        :type user_id: int
+        :param item_id: The item id
+        :type item_id: int
+        :param status: The item status
+        :type status: str
+        """
+        self.cursor.execute(f'UPDATE item SET delivery = {status} WHERE user_id = {user_id}'
                             f' and item_id = {item_id}')
         self.connection.commit()
         return self.cursor.rowcount

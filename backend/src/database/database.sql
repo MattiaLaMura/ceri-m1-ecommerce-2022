@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS item (
     album_id INT,
     user_id INT,
     paid BOOLEAN NOT NULL DEFAULT FALSE,
+    delivery VARCHAR(255) NOT NULL,
     PRIMARY KEY (item_id, album_id, user_id),
         FOREIGN KEY (album_id)
             REFERENCES album (album_id),

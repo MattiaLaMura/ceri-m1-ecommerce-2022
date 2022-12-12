@@ -8,7 +8,7 @@ from src.backend_metadata import DESCRIPTION, TAGS_METADATA
 from src.classes.artist import get_all_artists
 from src.classes.album import get_albums_from_artist
 from src.classes.song import get_songs_from_album
-from src.classes.item import create_item, get_items, buy_item, delete_item
+from src.classes.item import create_item, get_items, buy_item, delete_item, update_item
 from src.classes.token import Token, create_access_token, get_current_user, \
     get_current_admin
 from src.classes.admin import Admin, authentication as admin_authentication
@@ -202,3 +202,13 @@ def remove_item(item_id: int, current_user: User = Depends(get_current_user)):
     if delete_item(item_id, current_user.user_id):
         return {'message': 'The item has been removed.'}
     return {'message': 'The item cannot be removed.'}
+
+
+@app.get('/update/item', tags=['Update Item'], status_code=status.HTTP_200_OK)
+def update_status_item(item_id: int, user_id: int, item_status: str,
+                       current_admin: Admin = Depends(get_current_admin)):
+    """ This route allows the admin to update an item. """
+    print("Hello admin " + current_admin.admin_name)
+    if update_item(item_id, user_id, item_status):
+        return {'message': 'The item has been updated.'}
+    return {'message': 'The item did not change.'}

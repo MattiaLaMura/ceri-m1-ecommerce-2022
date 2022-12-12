@@ -80,4 +80,8 @@ TAGS_METADATA = [
         'name': 'Remove Item',
         'description': 'This route allows the *user* to **remove** an *item* from the database.',
     },
+    {
+        'name': 'Update Item',
+        'description': 'This route allows the *admin* to **update** an *item* from the database.',
+    },
 ]
