@@ -5,7 +5,11 @@ export default{
     data() {
         return {
             showModal: false,
-            user_name : ''
+            user_name : '',
+            clicked : false,
+            clickedPanier : false,
+            clickedCommandes : false,
+            clickedAccueil : false,
         }
     },
     created(){
@@ -28,6 +32,17 @@ export default{
         },
         disconnect(){
             localStorage.clear();
+        },
+        changeTxtColor(element) {
+            if(element == "panier"){
+                this.clickedPanier = true;
+                console.log("panier")
+            } else if (element == "commandes"){
+                this.clickedCommandes = true;
+            } else if (element == "accueil"){
+                this.clickedAccueil = true;
+            }
+            
         }
     },
     components: { ConnexionModal },
@@ -42,17 +57,19 @@ export default{
         <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
 
-            <router-link v-on:click="scrollToTop()" to="/" class="nav-link text-white" aria-current="page" >Accueil</router-link>
+            <router-link v-on:click="scrollToTop(), changeTxtColor('accueil')" to="/" class="nav-link text-white" v-bind:class="{ 'selected': clickedAccueil, 'text-white': !clickedAccueil }" aria-current="page" >Accueil</router-link>
             
-            <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-white">A propos</a></li>
+            <!-- <li class="nav-item"><a href="#" class="nav-link text-white">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link text-white">A propos</a></li> -->
             <div  v-if="user_name == ''">
                 <a href="#" class="nav-link text-white" v-on:click="showModal = true" >Connexion</a>
             </div>
-            <div v-else>
+            <div v-if="user_name != ''">
                 <a v-on:click="(disconnect(), updateHeader())" href="#" class="nav-link text-white">Déconnexion</a>
             </div>
-            <router-link to="/panier" class="nav-link text-white" aria-current="page" >Panier</router-link>
+            <router-link v-if="user_name != ''" to="/panier" class="nav-link text-white" v-bind:class="{ 'selected': clickedPanier, 'text-white': !clickedPanier }" v-on:click="changeTxtColor('panier')"  aria-current="page" >Panier</router-link>
+            <router-link v-if="user_name != ''" to="/commandes" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Commandes</router-link>
+            
 
         </ul>
         </header>
@@ -65,5 +82,9 @@ export default{
     position: sticky;
     top: 0px;
     z-index:100;
+}
+
+.selected {
+  background-color: #dc6e00;
 }
 </style>

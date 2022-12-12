@@ -9,48 +9,22 @@ export default {
     }
   },
   methods:{
-        // token(username, password){
-        //   username.replace('@', '%40');
-        //   url = 'http://host.docker.internal:8002/token';
-        //   headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-        //   data = 'grant_type=&username=' + username + '&password=' + password + '&scope=&client_id=&client_secret=';
-        //   response = requests.post(url=url, headers=headers, data=data);
-        //   if response.status_code != 200{
-        //       print('It does not work...')
-        //       return None
-        //   }
-        //   access_token = response.json()['access_token']
-        //   return access_token
-        // }
+
 
         async inscription(submitEvent){
 
           this.username = submitEvent.target.elements.username.value;
           this.email = submitEvent.target.elements.email.value;
           this.password = submitEvent.target.elements.password.value;
-
-          // var param = {};
-          // param["user_name"] = this.username;
-          // param["user_email"] = this.email;
-          // param["user_password"] = this.password;
-          
-          // if(this.username != "" && this.email != "" && this.password != ""){
-          //   this.$http.post('http://host.docker.internal:8000/signup', param, {
-          //         headers: {
-          //           'Accept': 'application/json',
-          //           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          //         }})
-          // } else {
-          //   console.log("MANQUE INFO")
-          // }
         
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           };
           const param = 'user_name=' + this.username + '&user_email=' + this.email + '&user_password=' + this.password;
-          const response = await axios.post("http://host.docker.internal:8000/signup?"+param);
+          const response = await axios.post("http://localhost:8000/signup?"+param);
           console.log(response.data)
+          this.$router.push('/')
         }
         
 
@@ -84,6 +58,7 @@ export default {
       </div>
       <div class="p-4 d-flex justify-content-center">
           <button type="submit" class="btn btn-primary buttonInscription text-center ">Créé mon compte</button>
+          <!-- <router-link  type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
           <!-- <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
       </div>
   </form>

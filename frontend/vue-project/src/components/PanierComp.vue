@@ -13,7 +13,7 @@ export default{
     methods:{
         async initPanier(){
             const token = localStorage.getItem('user_token')
-            const urlPanier = "http://host.docker.internal:8000/get/items"
+            const urlPanier = "http://localhost:8000/get/items"
 
             const responsePanier = await axios.get(urlPanier, {
                 headers: {
@@ -26,10 +26,10 @@ export default{
             if(responsePanier.data != null){
                 for(const albumPanier of responsePanier.data.items){
                     
-                    const responseArtists = await axios.get("http://host.docker.internal:8000/get/artists")
+                    const responseArtists = await axios.get("http://localhost:8000/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get("http://host.docker.internal:8000/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get("http://localhost:8000/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumPanier.album_id == album.album_id && albumPanier.paid == false){
@@ -44,7 +44,7 @@ export default{
         async enleverPanier(item_id){
             
             const token = localStorage.getItem('user_token')
-            const urlEnleverPanier = "http://host.docker.internal:8000/remove/item"
+            const urlEnleverPanier = "http://localhost:8000/remove/item"
             const paramEnleverPanier = "?item_id="+ item_id
             const responseEnleverPanier = await axios.get(urlEnleverPanier + paramEnleverPanier, {
                 headers: {
@@ -55,7 +55,7 @@ export default{
         },
         async acheterPanier(){
             const token = localStorage.getItem('user_token')
-            const urlAcheterPanier = "http://host.docker.internal:8000/buy/items"
+            const urlAcheterPanier = "http://localhost:8000/buy/items"
             
             for(const album of this.listAlbums){
                 const paramAcheterPanier = "?item_id="+ album.itemId

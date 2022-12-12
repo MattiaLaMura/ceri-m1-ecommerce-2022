@@ -3,6 +3,7 @@ import Accueil from "/src/views/Accueil.vue"
 import DetailItem from "/src/views/DetailItem.vue"
 import Inscription from "/src/views/Inscription.vue"
 import Panier from "/src/views/Panier.vue"
+import Commandes from "/src/views/Commandes.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -27,6 +28,11 @@ const router = createRouter({
             name: 'panier',
             path: '/panier',
             component: Panier
+        },
+        {
+            name: 'commandes',
+            path: '/commandes',
+            component: Commandes
         }
     ]
 })

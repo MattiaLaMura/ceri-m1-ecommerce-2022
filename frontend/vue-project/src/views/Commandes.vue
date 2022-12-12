@@ -3,7 +3,7 @@
 
 import Header from '/src/components/Header.vue';
 import AlbumDetails from '/src/components/AlbumDetails.vue';
-import PanierComp from '/src/components/PanierComp.vue';
+import CommandesComp from '/src/components/CommandesComp.vue';
 
 
 
@@ -12,8 +12,8 @@ import PanierComp from '/src/components/PanierComp.vue';
 
 <template>
     <Header/>
-    <h3 class="text-white text-center">Panier</h3>
-    <PanierComp/>
+    <h3 class="text-white text-center">Commandes</h3>
+    <CommandesComp/>
     
   
 </template>

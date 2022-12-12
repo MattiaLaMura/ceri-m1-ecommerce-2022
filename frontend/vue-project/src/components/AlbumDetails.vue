@@ -15,7 +15,7 @@ export default{
             const token = localStorage.getItem('user_token')
             
             // Recupere donnees de l'utilisateur
-            const urlAjoutPanier = "http://host.docker.internal:8000/add/item?"
+            const urlAjoutPanier = "http://localhost:8000/add/item?"
             const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
             const headersAjoutPanier = { 
                 'Accept': 'application/json',
@@ -44,18 +44,18 @@ export default{
         }
     },
     async created() {
-        const responseSongs = await fetch("http://host.docker.internal:8000/get/songs?album_id="+this.idAlbum);
+        const responseSongs = await fetch("http://localhost:8000/get/songs?album_id="+this.idAlbum);
         const dataSongs = await responseSongs.json();
         
         for(const song of dataSongs.songs){
             this.listeMusique.push({titre:song.song_title})
         }
 
-        const responseArtist = await fetch("http://host.docker.internal:8000/get/artists");
+        const responseArtist = await fetch("http://localhost:8000/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch("http://host.docker.internal:8000/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch("http://localhost:8000/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 if(album.album_id == this.idAlbum){
