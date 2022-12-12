@@ -23,9 +23,21 @@ jobs:
         run: |
           pylint --fail-under=9 backend/.
 
-#  build:
-#    needs: unit_test
-#    europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig
+  build:
+    needs: unit_test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Building docker images and push to the registry
+        run: |
+          docker login -u _json_key_base64 -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig
+          docker build -t backend -f backend.Dockerfile .
+          docker build -t frontend -f frontend.Dockerfile .
+          docker tag backend europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/backend:0.0.1
+          docker tag frontend europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1
+          docker push europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/backend:0.0.1
+          docker push europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1
 
   deploy:
     runs-on: ubuntu-latest
