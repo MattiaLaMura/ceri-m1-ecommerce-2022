@@ -15,6 +15,7 @@ This file will be used to stock the environment variables and pass them to the `
 
 To build and run it, you just need to execute the following commands:
 ```shell
+# OPTIONAL : this is just to run a test database
 docker run -d -p 3306:3306 --name db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db mysql
 
 docker build -t backend -f backend.Dockerfile . && docker run -d --name backend --env-file .env -p 8000:22 backend
