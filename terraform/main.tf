@@ -104,7 +104,7 @@ resource "google_cloud_run_service" "frontend" {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1"
         env {
           name = "BACKEND_URL"
-          value = google_cloud_run_service.backend.url
+          value = resource.google_cloud_run_service.backend.url
         }
       }
     }
