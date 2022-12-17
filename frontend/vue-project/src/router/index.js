@@ -5,6 +5,8 @@ import Inscription from "/src/views/Inscription.vue"
 import Panier from "/src/views/Panier.vue"
 import Commandes from "/src/views/Commandes.vue"
 import BackofficeConnexion from "/src/views/BackofficeConnexion.vue"
+import Backoffice from "/src/views/Backoffice.vue"
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -39,7 +41,17 @@ const router = createRouter({
             name: 'backoffice',
             path: '/backoffice',
             component: BackofficeConnexion
-        }
+        },
+        {
+            name: 'backofficeListeAlbum',
+            path: '/backoffice/listeAlbum',
+            component: Backoffice
+        },
+        {
+            name: 'ajoutAlbum',
+            path: '/backoffice/ajoutAlbum',
+            component: Backoffice
+        },
     ]
 })
 

@@ -52,6 +52,7 @@ export default {
               this.$emit('updateHeader')
             }
             console.log(responseCurrentUser.data.current_user.user_name)
+            this.$router.push('/backoffice/listeAlbum')
           } else console.log("error connexion")
         }
     }

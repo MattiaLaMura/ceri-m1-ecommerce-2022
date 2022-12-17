@@ -34,18 +34,19 @@ export default{
                 // {nom:'album',artist:'artist'},
                 
             ],
+            plusImg :'https://p.kindpng.com/picc/s/712-7123671_plus-sign-circle-png-clipart-png-download-black.png'
             // Album:[]
 
         }
     },
     async created() {
-        const responseArtist = await fetch("http://"+process.env.VUE_APP_BACKEND_URL+"/get/artists");
+        const responseArtist = await fetch("http://localhost:8000/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
             // console.log(artist)
             // console.log(artist.artist_id)
-            const responseAlbum = await fetch("http://"+process.env.VUE_APP_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch("http://localhost:8000/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             // console.log(dataAlbum);
             for(const album of dataAlbum.albums){
@@ -69,7 +70,16 @@ export default{
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="row">
-                    
+                    <div class="p-4 col-lg-4">
+                        <router-link :to="{name : 'ajoutAlbum' }">
+                            <div class="card bg-dark">
+                                <img v-bind:src=plusImg class=" img-fluid card-img-top">
+                                <div class="card-title">
+                                    <h5 class="card-text text-center text-white py-3">Ajouter Album</h5>
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
                     <div class="p-4 col-lg-4" v-for="(album, index) in listAlbums" :key="album.id">
                         <Album :nomAlbum="album.nomAlbum" :idAlbum="album.idAlbum" :artist="album.artist" :imageIndex="index+1" :imageAlbum="album.imageAlbum"></Album>
                     </div>

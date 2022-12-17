@@ -42,7 +42,6 @@ export default{
             console.log(this.listAlbums)
         },
         async enleverPanier(item_id){
-            
             const token = localStorage.getItem('user_token')
             const urlEnleverPanier = "http://localhost:8000/remove/item"
             const paramEnleverPanier = "?item_id="+ item_id
