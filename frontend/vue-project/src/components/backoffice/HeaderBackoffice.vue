@@ -1,5 +1,5 @@
 <script>
-import ConnexionModal from './ConnexionModal.vue'
+import ConnexionModal from '../ConnexionModal.vue'
 
 export default{
     data() {

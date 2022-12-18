@@ -1,25 +1,22 @@
 <script setup>
 
-import BackofficeConnexionForm from '/src/components/BackofficeConnexionForm.vue';
-import Header from '/src/components/Header.vue';
 
-
-
+import HeaderBackoffice from '/src/components/backoffice/HeaderBackoffice.vue';
+import AjoutForm from '/src/components/backoffice/AjoutForm.vue';
 </script>
 
 <template>
 
-    <Header/>
+    <HeaderBackoffice/>
     <div class="container pt-3">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <BackofficeConnexionForm/>
+                <AjoutForm/>
             </div>
             <div class="col-2"></div>
         </div>
     </div>
-        
     
   
 </template>

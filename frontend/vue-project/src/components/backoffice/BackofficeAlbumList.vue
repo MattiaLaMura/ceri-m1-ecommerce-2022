@@ -1,5 +1,5 @@
 <script>
-import Album from './Album.vue'
+import Album from '../Album.vue'
 export default{
     
     components: {

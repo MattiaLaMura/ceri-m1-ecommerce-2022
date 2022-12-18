@@ -1,8 +1,8 @@
 <script setup>
 
 import AlbumList from '/src/components/AlbumList.vue';
-import HeaderBackoffice from '/src/components/HeaderBackoffice.vue';
-import BackofficeAlbumList from '/src/components/BackofficeAlbumList.vue';
+import HeaderBackoffice from '/src/components/backoffice/HeaderBackoffice.vue';
+import BackofficeAlbumList from '/src/components/backoffice/BackofficeAlbumList.vue';
 
 </script>
 

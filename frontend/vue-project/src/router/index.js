@@ -4,8 +4,9 @@ import DetailItem from "/src/views/DetailItem.vue"
 import Inscription from "/src/views/Inscription.vue"
 import Panier from "/src/views/Panier.vue"
 import Commandes from "/src/views/Commandes.vue"
-import BackofficeConnexion from "/src/views/BackofficeConnexion.vue"
-import Backoffice from "/src/views/Backoffice.vue"
+import BackofficeConnexion from "/src/views/backoffice/BackofficeConnexion.vue"
+import Backoffice from "/src/views/backoffice/Backoffice.vue"
+import AjoutAlbum from "/src/views/backoffice/AjoutAlbum.vue"
 
 
 const router = createRouter({
@@ -50,7 +51,7 @@ const router = createRouter({
         {
             name: 'ajoutAlbum',
             path: '/backoffice/ajoutAlbum',
-            component: Backoffice
+            component: AjoutAlbum
         },
     ]
 })
