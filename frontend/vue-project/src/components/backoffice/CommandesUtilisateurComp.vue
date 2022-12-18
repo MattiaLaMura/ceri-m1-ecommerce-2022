@@ -5,6 +5,8 @@ export default{
     data(){
         return {
             listAlbums:[],
+            selectedStatus: "",
+            statusCommande: ["En préparation","Envoyé","En cours","Livré"]
         }
     },
     props: {
@@ -17,14 +19,14 @@ export default{
         async initCommandes(){
             const token = localStorage.getItem('admin_token')
             const urlCommandes = "http://localhost:8000/get/orders?user_id=" + this.idUtilisateur;
-            console.log(urlCommandes)
+            // console.log(urlCommandes)
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }});
             
-            console.log(responseCommandes.data)
+            // console.log(responseCommandes.data)
             // Récupère info des albums du Commandes
             if(responseCommandes.data != null){
                 for(const albumCommandes of responseCommandes.data.orders){
@@ -36,13 +38,25 @@ export default{
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){
-                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url})
+                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
                             }
                         }
                     }
                 }
             }
-            console.log(this.listAlbums)
+            // console.log(this.listAlbums)
+        },
+        async changeStatus(idItem,status){
+            const token = localStorage.getItem('admin_token')
+            const urlCommandes = "http://localhost:8000/update/item?item_id="+ idItem +"&user_id=" + this.idUtilisateur + "&item_status=" + status;
+            console.log(urlCommandes)
+            const responseCommandes = await axios.get(urlCommandes, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }});
+            
+            console.log(responseCommandes.data)
         }
     }
 }
@@ -52,22 +66,26 @@ export default{
    
     <div class="container">
         <div class="row">
-            <div class="col-lg-7">
-                
                 <div v-for="(album,index) in listAlbums" :key="index" >
                     <div class = p-4>
                         <div class="row p-2 rounded-2 bg-dark">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 text-center">
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <div class="text-white">{{album.nomAlbum}}</div>
+                                <h3 class="text-white">{{album.nomAlbum}}</h3>
+                                <div  class="text-white">Status : {{album.itemStatus}}</div><br />
+                                <v-select class="bg-white" 
+                                v-model="album.itemStatus"
+                                :options="statusCommande"
+                                @update:modelValue="changeStatus(album.itemId,album.itemStatus)"
+                                />
+                               
+                               
                             </div>
                         </div>
                     </div>
                 </div>
-             
-            </div>
         </div>
     </div>
    

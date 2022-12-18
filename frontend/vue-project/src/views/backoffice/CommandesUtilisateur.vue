@@ -14,8 +14,16 @@ export default {
 <template>
     <HeaderBackoffice/>
     <h3 class="text-white text-center">Commandes</h3>
-    <CommandesUtilisateurComp :idUtilisateur = "idUtilisateur"/>
     
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <CommandesUtilisateurComp :idUtilisateur = "idUtilisateur"/>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
   
 </template>
 

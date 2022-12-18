@@ -1,10 +1,12 @@
 <script>
 import axios from 'axios'
 import {getCurrentInstance, defineComponent} from 'vue'
+
 export default{
     data(){
         return {
             listAlbums:[],
+            
         }
     },
     async created(){
@@ -33,7 +35,7 @@ export default{
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){
-                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url})
+                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
                             }
                         }
                     }
@@ -47,24 +49,22 @@ export default{
 
 <template>
    
-    <div class="container">
+   <div class="container">
         <div class="row">
-            <div class="col-lg-7">
-                
                 <div v-for="(album,index) in listAlbums" :key="index" >
                     <div class = p-4>
                         <div class="row p-2 rounded-2 bg-dark">
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 text-center">
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <div class="text-white">{{album.nomAlbum}}</div>
+                                <h3 class="text-white">{{album.nomAlbum}}</h3>
+                                <div class="text-white">Status : {{album.itemStatus}}</div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-             
-            </div>
         </div>
     </div>
    
