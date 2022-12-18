@@ -30,8 +30,13 @@ export default {
       }
       if(this.idArtist == ""){
         // Ajout du nouvel artiste
+        const tokenAdmin = localStorage.getItem('admin_token')
         const param = 'artist_name=' + this.nomArtiste + '&is_active=' + "true";
-        const response = await axios.get("http://host.docker.internal:8000/add/artist?"+param);
+        const response = await axios.get("http://host.docker.internal:8000/add/artist?"+param, {
+                headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + tokenAdmin
+                }});
         console.log(response.data);
       } else {
         console.log("artiste existant id : ", this.idArtist);
@@ -47,14 +52,19 @@ export default {
           this.idArtist = artist.artist_id;
         }
       }
-     
+      
+      const tokenAdmin = localStorage.getItem('admin_token')
       const param = 'artist_id=' + this.idArtist + '&album_title=' + this.titreAlbum + '&album_year=' + this.anneeAlbum + '&album_cover=' + this.coverAlbum;
-      const response = await axios.get("http://localhost:8000/add/album?"+param);
+      const response = await axios.get("http://localhost:8000/add/album?"+param, {
+                headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + tokenAdmin
+                }});
       console.log(response.data)
     },
 
     async ajoutMusique(nomMusique){
-      
+      // Recupere id artiste
       const responseArtist = await fetch("http://localhost:8000/get/artists");
       const dataArtist = await responseArtist.json();
       this.idArtist = "";
@@ -64,23 +74,25 @@ export default {
         }
       }
       
-      console.log("artist id ",this.idArtist)
+      // Recupere l'album
       const responseAlbum = await fetch("http://localhost:8000/get/albums?artist_id="+this.idArtist);
-      
       const dataAlbum = await responseAlbum.json();
-      
       let idAlbum = "";
-      
       for(const album of dataAlbum.albums){
           console.log(album.album_title);
           if(album.album_title == this.titreAlbum){
             idAlbum = album.album_id;
           }
       }
-      console.log("album id ",idAlbum)
-      const param = 'album_id=' + idAlbum + '&song_title=' + nomMusique + '&song_length=' + '0';
       
-      const response = await axios.get("http://localhost:8000/add/song?"+param);
+      // Ajout de la musique
+      const tokenAdmin = localStorage.getItem('admin_token')
+      const param = 'album_id=' + idAlbum + '&song_title=' + nomMusique + '&song_length=' + '0';
+      const response = await axios.get("http://localhost:8000/add/song?"+param, {
+                headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + tokenAdmin
+                }});
       console.log(response.data)
     },
 
@@ -90,8 +102,7 @@ export default {
       this.titreAlbum = submitEvent.target.elements.titreAlbum.value;
       this.anneeAlbum = submitEvent.target.elements.anneeAlbum.value;
       this.coverAlbum = submitEvent.target.elements.coverAlbum.value;
-      // this.listeMusique = submitEvent.target.elements.listeMusique.value;
-
+      
       const headers = { 
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -105,7 +116,7 @@ export default {
       }
       
      
-      },
+    },
     
     ajoutInputMusique(){
       

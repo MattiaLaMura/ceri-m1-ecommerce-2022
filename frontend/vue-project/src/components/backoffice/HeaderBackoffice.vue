@@ -5,7 +5,7 @@ export default{
     data() {
         return {
             showModal: false,
-            user_name : '',
+            admin_name : '',
             clicked : false,
             clickedPanier : false,
             clickedCommandes : false,
@@ -13,9 +13,9 @@ export default{
         }
     },
     created(){
-        if(localStorage.getItem('user_name') != null){
-            this.user_name = localStorage.getItem('user_name')
-        } else this.user_name = '';
+        if(localStorage.getItem('admin_name') != null){
+            this.admin_name = localStorage.getItem('admin_name')
+        } else this.admin_name = '';
     },
     methods:{
         scrollToTop() {
@@ -26,9 +26,9 @@ export default{
             
         },
         updateHeader(){
-            if(localStorage.getItem('user_name') != null){
-                this.user_name = localStorage.getItem('user_name')
-            } else this.user_name = '';
+            if(localStorage.getItem('admin_name') != null){
+                this.admin_name = localStorage.getItem('admin_name')
+            } else this.admin_name = '';
         },
         disconnect(){
             localStorage.clear();
@@ -59,14 +59,14 @@ export default{
 
             <router-link v-on:click="scrollToTop(), changeTxtColor('accueil')" to="/backoffice/listeAlbum" class="nav-link text-white" v-bind:class="{ 'selected': clickedAccueil, 'text-white': !clickedAccueil }" aria-current="page" >Liste Albums</router-link>
         
-            <div  v-if="user_name == ''">
-                <a href="#" class="nav-link text-white" v-on:click="showModal = true" >Connexion</a>
+            <div  v-if="admin_name == ''">
+                <router-link  to="/backoffice" class="nav-link text-white">Connexion</router-link>
             </div>
-            <div v-if="user_name != ''">
-                <a v-on:click="(disconnect(), updateHeader())" href="#" class="nav-link text-white">Déconnexion</a>
+            <div v-if="admin_name != ''">
+                <router-link v-on:click="(disconnect(), updateHeader())" to="/backoffice" class="nav-link text-white">Déconnexion</router-link>
             </div>
             <!-- <router-link v-if="user_name != ''" to="/panier" class="nav-link text-white" v-bind:class="{ 'selected': clickedPanier, 'text-white': !clickedPanier }" v-on:click="changeTxtColor('panier')"  aria-current="page" >Panier</router-link> -->
-            <router-link v-if="user_name != ''" to="/backoffice/commandes" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
+            <router-link v-if="admin_name != ''" to="/backoffice/commandes" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
             
 
         </ul>

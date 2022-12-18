@@ -4,7 +4,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      email: "",
+      name: "",
       password:""
     }
   },
@@ -12,18 +12,18 @@ export default {
 
         async connexion(submitEvent){
 
-          this.email = submitEvent.target.elements.email.value;
+          this.name = submitEvent.target.elements.name.value;
           this.password = submitEvent.target.elements.password.value;
 
-          this.email.replace('@', '%40')
+          this.name.replace('@', '%40')
 
-          const url = 'http://localhost:8000/token'
+          const url = 'http://localhost:8000/token_backoffice'
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
           };
         
-          const param = 'grant_type=&username=' + this.email.replace('@', '%40') + '&password=' + this.password+ '&scope=&client_id=&client_secret=';
+          const param = 'grant_type=&username=' + this.name + '&password=' + this.password+ '&scope=&client_id=&client_secret=';
           const response = await axios.post(url ,param, {headers})
           
           if(response.data != null){
@@ -32,26 +32,26 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentUser = "http://localhost:8000/get/current/user"
-            const headersCurrentUser = { 
+            const urlCurrentAdmin = "http://localhost:8000/get/current/admin"
+            const headersCurrentAdmin = { 
               'Accept': 'application/json',
               'Authorization': 'Bearer ' + token
             };
-            const responseCurrentUser = await axios.get(urlCurrentUser, {
+            const responseCurrentAdmin = await axios.get(urlCurrentAdmin, {
               headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token
               }});
-            if(responseCurrentUser.data != null){
-              localStorage.setItem('user_name', responseCurrentUser.data.current_user.user_name)
-              localStorage.setItem('user_email', responseCurrentUser.data.current_user.user_email)
-              localStorage.setItem('user_id', responseCurrentUser.data.current_user.user_id)
-              localStorage.setItem('user_token', response.data.access_token)
+            if(responseCurrentAdmin.data != null){
+              localStorage.clear();
+              localStorage.setItem('admin_name', responseCurrentAdmin.data.current_admin.admin_name)
+              localStorage.setItem('admin_id', responseCurrentAdmin.data.current_admin.admin_id)
+              localStorage.setItem('admin_token', response.data.access_token)
               // Connexion réussie, ferme le formulaire
               this.$emit('close-modal')
               this.$emit('updateHeader')
             }
-            console.log(responseCurrentUser.data.current_user.user_name)
+            console.log(responseCurrentAdmin.data.current_admin.admin_name)
             this.$router.push('/backoffice/listeAlbum')
           } else console.log("error connexion")
         }
@@ -65,8 +65,8 @@ export default {
     <h2 class="text-center text-white">Connexion Back office</h2>
     <form @submit.prevent="connexion">
       <div class="form-group p-2 text-white">
-          <label for="InputEmail">Email</label>
-          <input type="email" class="form-control" id="InputEmail" name="email" placeholder="Entrez votre Email">
+          <label for="InputEmail">Nom</label>
+          <input  class="form-control" id="InputName" name="name" placeholder="Entrez votre nom d'utilisateur">
       </div>
       <div class="form-group p-2 text-white">
           <label for="InputPassword">Mot de passe</label>
