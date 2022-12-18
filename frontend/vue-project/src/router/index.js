@@ -8,6 +8,9 @@ import BackofficeConnexion from "/src/views/backoffice/BackofficeConnexion.vue"
 import Backoffice from "/src/views/backoffice/Backoffice.vue"
 import AjoutAlbum from "/src/views/backoffice/AjoutAlbum.vue"
 
+import ListeUtilisateurs from "/src/views/backoffice/ListeUtilisateurs.vue"
+import CommandesUtilisateur from "/src/views/backoffice/CommandesUtilisateur.vue"
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -52,6 +55,17 @@ const router = createRouter({
             name: 'ajoutAlbum',
             path: '/backoffice/ajoutAlbum',
             component: AjoutAlbum
+        },
+        {
+            name: 'listeUtilisateurs',
+            path: '/backoffice/commandes/listeUtilisateurs',
+            component: ListeUtilisateurs
+        },
+        {
+            name: 'commandesUtilisateur',
+            path: '/backoffice/commandes/:idUtilisateur',
+            component: CommandesUtilisateur,
+            props:true
         },
     ]
 })

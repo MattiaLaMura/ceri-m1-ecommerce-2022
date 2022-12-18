@@ -66,7 +66,7 @@ export default{
                 <router-link v-on:click="(disconnect(), updateHeader())" to="/backoffice" class="nav-link text-white">Déconnexion</router-link>
             </div>
             <!-- <router-link v-if="user_name != ''" to="/panier" class="nav-link text-white" v-bind:class="{ 'selected': clickedPanier, 'text-white': !clickedPanier }" v-on:click="changeTxtColor('panier')"  aria-current="page" >Panier</router-link> -->
-            <router-link v-if="admin_name != ''" to="/backoffice/commandes" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
+            <router-link v-if="admin_name != ''" to="/backoffice/commandes/listeUtilisateurs" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
             
 
         </ul>
