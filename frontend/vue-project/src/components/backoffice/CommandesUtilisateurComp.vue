@@ -18,7 +18,7 @@ export default{
     methods:{
         async initCommandes(){
             const token = localStorage.getItem('admin_token')
-            const urlCommandes = "http://localhost:8000/get/orders?user_id=" + this.idUtilisateur;
+            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/orders?user_id=" + this.idUtilisateur;
             // console.log(urlCommandes)
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
@@ -31,10 +31,10 @@ export default{
             if(responseCommandes.data != null){
                 for(const albumCommandes of responseCommandes.data.orders){
                     
-                    const responseArtists = await axios.get("http://localhost:8000/get/artists")
+                    const responseArtists = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get("http://localhost:8000/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){
@@ -48,7 +48,7 @@ export default{
         },
         async changeStatus(idItem,status){
             const token = localStorage.getItem('admin_token')
-            const urlCommandes = "http://localhost:8000/update/item?item_id="+ idItem +"&user_id=" + this.idUtilisateur + "&item_status=" + status;
+            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/update/item?item_id="+ idItem +"&user_id=" + this.idUtilisateur + "&item_status=" + status;
             console.log(urlCommandes)
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {

@@ -1,4 +1,5 @@
 <script>
+import { processExpression } from '@vue/compiler-core';
 import Album from './Album.vue'
 export default{
     
@@ -39,13 +40,13 @@ export default{
         }
     },
     async created() {
-        const responseArtist = await fetch("http://localhost:8000/get/artists");
+        const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
             // console.log(artist)
             // console.log(artist.artist_id)
-            const responseAlbum = await fetch("http://localhost:8000/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             // console.log(dataAlbum);
             for(const album of dataAlbum.albums){

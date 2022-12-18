@@ -17,7 +17,7 @@ export default {
 
           this.name.replace('@', '%40')
 
-          const url = 'http://localhost:8000/token_backoffice'
+          const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/token_backoffice"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,7 +32,7 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentAdmin = "http://localhost:8000/get/current/admin"
+            const urlCurrentAdmin = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/current/admin"
             const headersCurrentAdmin = { 
               'Accept': 'application/json',
               'Authorization': 'Bearer ' + token

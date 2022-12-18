@@ -8,7 +8,7 @@ export default {
   },
   async created() {
     const tokenAdmin = localStorage.getItem('admin_token')
-    const response = await axios.get("http://host.docker.internal:8000/get/users", {
+    const response = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/users", {
             headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + tokenAdmin

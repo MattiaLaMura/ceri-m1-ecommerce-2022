@@ -15,7 +15,7 @@ export default{
     methods:{
         async initCommandes(){
             const token = localStorage.getItem('user_token')
-            const urlCommandes = "http://localhost:8000/get/items"
+            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/items"
 
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
@@ -28,10 +28,10 @@ export default{
             if(responseCommandes.data != null){
                 for(const albumCommandes of responseCommandes.data.items){
                     
-                    const responseArtists = await axios.get("http://localhost:8000/get/artists")
+                    const responseArtists = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get("http://localhost:8000/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){

@@ -11,7 +11,7 @@ export default {
   methods:{
         // token(username, password){
         //   username.replace('@', '%40');
-        //   url = 'http://localhost:8002/token';
+        //   url = 'http://host.docker.internal:8002/token';
         //   headers = {'Content-Type': 'application/x-www-form-urlencoded'};
         //   data = 'grant_type=&username=' + username + '&password=' + password + '&scope=&client_id=&client_secret=';
         //   response = requests.post(url=url, headers=headers, data=data);
@@ -30,7 +30,7 @@ export default {
 
           this.email.replace('@', '%40')
 
-          const url = 'http://localhost:8000/token'
+          const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/token"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -45,11 +45,8 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentUser = "http://localhost:8000/get/current/user"
-            const headersCurrentUser = { 
-              'Accept': 'application/json',
-              'Authorization': 'Bearer ' + token
-            };
+            const urlCurrentUser = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/current/user"
+
             const responseCurrentUser = await axios.get(urlCurrentUser, {
               headers: {
                 'Accept': 'application/json',
