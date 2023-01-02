@@ -7,7 +7,6 @@ import Commandes from "/src/views/Commandes.vue"
 import BackofficeConnexion from "/src/views/backoffice/BackofficeConnexion.vue"
 import Backoffice from "/src/views/backoffice/Backoffice.vue"
 import AjoutAlbum from "/src/views/backoffice/AjoutAlbum.vue"
-
 import ListeUtilisateurs from "/src/views/backoffice/ListeUtilisateurs.vue"
 import CommandesUtilisateur from "/src/views/backoffice/CommandesUtilisateur.vue"
 

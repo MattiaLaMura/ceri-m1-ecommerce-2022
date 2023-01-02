@@ -35,7 +35,7 @@ export default{
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){
-                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
+                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, artist:artist.artist_name, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
                             }
                         }
                     }
@@ -58,7 +58,7 @@ export default{
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <h3 class="text-white">{{album.nomAlbum}}</h3>
+                                <h3 class="text-white">{{album.nomAlbum}} - {{album.artist}}</h3>
                                 <div class="text-white">Status : {{album.itemStatus}}</div>
                                 
                             </div>
@@ -74,8 +74,6 @@ export default{
 img {
     width: 200px; 
     height: 200px;
-    /* margin: auto;     */
-    /* display: block; */
 }
 .card-img-top {
     width: 100%;

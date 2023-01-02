@@ -21,10 +21,6 @@ export default{
         scrollToTop() {
             window.scrollTo(0,0);
         },
-        test(){
-            console.log(this.showModal)
-            
-        },
         updateHeader(){
             if(localStorage.getItem('admin_name') != null){
                 this.admin_name = localStorage.getItem('admin_name')
@@ -51,24 +47,21 @@ export default{
 </script>
 
 <template>
-    <!-- <h4 v-if="user_name != ''" class="text-white text-center"> Bonjour {{user_name}}</h4> -->
     <ConnexionModal v-show="showModal" @close-modal="showModal = false" @updateHeader="updateHeader()" />
     <div class="container bg-dark rounded-3">
         <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
 
-            <router-link v-on:click="scrollToTop(), changeTxtColor('accueil')" to="/backoffice/listeAlbum" class="nav-link text-white" v-bind:class="{ 'selected': clickedAccueil, 'text-white': !clickedAccueil }" aria-current="page" >Liste Albums</router-link>
+            <router-link v-on:click="scrollToTop(), changeTxtColor('accueil')" to="/backoffice/listeAlbum" class="nav-link text-white px-5 fw-bold" v-bind:class="{ 'selected': clickedAccueil, 'text-white': !clickedAccueil }" aria-current="page" >Liste Albums</router-link>
         
             <div  v-if="admin_name == ''">
-                <router-link  to="/backoffice" class="nav-link text-white">Connexion</router-link>
+                <router-link  to="/backoffice" class="nav-link text-white px-5 fw-bold">Connexion</router-link>
             </div>
             <div v-if="admin_name != ''">
-                <router-link v-on:click="(disconnect(), updateHeader())" to="/backoffice" class="nav-link text-white">Déconnexion</router-link>
+                <router-link v-on:click="(disconnect(), updateHeader())" to="/backoffice" class="nav-link text-white px-5 fw-bold">Déconnexion</router-link>
             </div>
-            <!-- <router-link v-if="user_name != ''" to="/panier" class="nav-link text-white" v-bind:class="{ 'selected': clickedPanier, 'text-white': !clickedPanier }" v-on:click="changeTxtColor('panier')"  aria-current="page" >Panier</router-link> -->
-            <router-link v-if="admin_name != ''" to="/backoffice/commandes/listeUtilisateurs" class="nav-link text-white" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
             
-
+            <router-link v-if="admin_name != ''" to="/backoffice/commandes/listeUtilisateurs" class="nav-link text-white px-5 fw-bold" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
         </ul>
         </header>
     </div>

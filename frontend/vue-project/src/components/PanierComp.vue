@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios'
-import {getCurrentInstance, defineComponent} from 'vue'
 export default{
     data(){
         return {
@@ -33,7 +32,7 @@ export default{
 
                         for(const album of responseAlbum.data.albums){
                             if(albumPanier.album_id == album.album_id && albumPanier.paid == false){
-                                this.listAlbums.push({itemId:albumPanier.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url})
+                                this.listAlbums.push({itemId:albumPanier.item_id,nomAlbum:album.album_title, artist:artist.artist_name, imageAlbum:album.album_image_url})
                             }
                         }
                     }
@@ -85,7 +84,7 @@ export default{
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <div class="text-white">{{album.nomAlbum}}</div>
+                                <div class="text-white">{{album.nomAlbum}} - {{album.artist}}</div>
                                 <a v-on:click="enleverPanier(album.itemId); listAlbums.splice(index, 1)" href="#" class="">Supprimer du panier</a>
                             </div>
                         </div>
@@ -106,8 +105,6 @@ export default{
 img {
     width: 200px; 
     height: 200px;
-    /* margin: auto;     */
-    /* display: block; */
 }
 .card-img-top {
     width: 100%;

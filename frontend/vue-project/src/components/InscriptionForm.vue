@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios'
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 export default {
   data() {
     return {
@@ -9,54 +11,33 @@ export default {
     }
   },
   methods:{
-        // token(username, password){
-        //   username.replace('@', '%40');
-        //   url = 'http://host.docker.internal:8002/token';
-        //   headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-        //   data = 'grant_type=&username=' + username + '&password=' + password + '&scope=&client_id=&client_secret=';
-        //   response = requests.post(url=url, headers=headers, data=data);
-        //   if response.status_code != 200{
-        //       print('It does not work...')
-        //       return None
-        //   }
-        //   access_token = response.json()['access_token']
-        //   return access_token
-        // }
-
         async inscription(submitEvent){
 
           this.username = submitEvent.target.elements.username.value;
           this.email = submitEvent.target.elements.email.value;
           this.password = submitEvent.target.elements.password.value;
 
-          // var param = {};
-          // param["user_name"] = this.username;
-          // param["user_email"] = this.email;
-          // param["user_password"] = this.password;
-          
-          // if(this.username != "" && this.email != "" && this.password != ""){
-          //   this.$http.post('http://"+import.meta.env.VITE_BACKEND_URL+"/signup', param, {
-          //         headers: {
-          //           'Accept': 'application/json',
-          //           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          //         }})
-          // } else {
-          //   console.log("MANQUE INFO")
-          // }
-        
-          const headers = { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          };
           const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/signup?"
           const param = 'user_name=' + this.username + '&user_email=' + this.email + '&user_password=' + this.password;
-          const response = await axios.post(url+param);
+          const response = await axios.post(url+param).catch(function(error){
+            console.log("error inscription")
+            useToast().error('Inscription échouée.', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+            });
+          })
+
+          useToast().success('Inscription réussie', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+          });
           console.log(response.data)
+          if(response.data != null){
+            this.$router.push('/');
+          } else console.log("Erreur inscription");
         }
-        
-
-
-
     }
 }
 
@@ -84,8 +65,7 @@ export default {
           <input type="password" class="form-control" id="InputPassword" placeholder="Confirmation mot de passe">
       </div>
       <div class="p-4 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary buttonInscription text-center ">Créé mon compte</button>
-          <!-- <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
+          <button type="submit" class="btn buttonInscription text-center ">Créé mon compte</button>
       </div>
   </form>
 </template>

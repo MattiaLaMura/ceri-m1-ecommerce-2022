@@ -16,8 +16,6 @@ export default {
   },
   methods:{
 
-    
-
     async ajoutArtiste(){
       // Verifie si l'artise n'existe pas déja
       const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
@@ -97,29 +95,20 @@ export default {
     },
 
     async ajouter(submitEvent){
-
+      // Récupère info du formulaire
       this.nomArtiste = submitEvent.target.elements.nomArtiste.value;
       this.titreAlbum = submitEvent.target.elements.titreAlbum.value;
       this.anneeAlbum = submitEvent.target.elements.anneeAlbum.value;
       this.coverAlbum = submitEvent.target.elements.coverAlbum.value;
-      
-      const headers = { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      };
 
       await this.ajoutArtiste()
       await this.ajoutAlbum()
-      
       for(let i = 0; i < this.listeMusiqueForm.length; i++){
         await this.ajoutMusique(this.listeMusiqueForm[i].titreMusique)
       }
-      
-     
     },
     
     ajoutInputMusique(){
-      
       this.listeMusiqueForm.push({key:this.musiqueKey++});
     },
     
@@ -128,7 +117,7 @@ export default {
       this.listeMusiqueForm.splice(key, 1);
     }
 
-    }
+  }
 }
 
 
@@ -172,18 +161,11 @@ export default {
             <div class="col text-center">
               <button type="button" class="btn buttonPlus" v-on:click="listeMusiqueForm.push({key:this.musiqueKey++});">+</button> 
             </div>
-            <!-- <div class="col text-center">
-              <button type="button" class="btn buttonMoins" v-on:click="this.nbMusiques--">-</button>
-            </div> -->
           </div>
       </div>
       
-      
-      
       <div class="p-4 d-flex justify-content-center">
-          <button type="submit" class="btn  buttonInscription text-center ">Ajouter l'album</button>
-          <!-- <router-link  type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
-          <!-- <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
+          <button type="submit" class="btn  buttonAjoutAlbum text-center ">Ajouter l'album</button>
       </div>
   </form>
 </template>
@@ -203,17 +185,8 @@ p {
   margin: 20px 0;
 }
 
-.buttonConnection {
-  background-color: #dc6e00;
-  width: 150px;
-  height: 40px;
-  color: white;
-  font-size: 14px;
-  border-radius: 16px;
-  margin-top: 50px;
-}
 
-.buttonInscription {
+.buttonAjoutAlbum {
   background-color: #dc6e00;
   width: 150px;
   height: 40px;

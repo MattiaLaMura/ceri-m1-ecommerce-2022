@@ -9,9 +9,8 @@ export default {
     }
   },
   methods:{
-
         async connexion(submitEvent){
-
+          // Récupère info formulaire
           this.name = submitEvent.target.elements.name.value;
           this.password = submitEvent.target.elements.password.value;
 
@@ -33,10 +32,7 @@ export default {
 
             // Recupere donnees de l'utilisateur
             const urlCurrentAdmin = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/current/admin"
-            const headersCurrentAdmin = { 
-              'Accept': 'application/json',
-              'Authorization': 'Bearer ' + token
-            };
+
             const responseCurrentAdmin = await axios.get(urlCurrentAdmin, {
               headers: {
                 'Accept': 'application/json',
@@ -47,8 +43,7 @@ export default {
               localStorage.setItem('admin_name', responseCurrentAdmin.data.current_admin.admin_name)
               localStorage.setItem('admin_id', responseCurrentAdmin.data.current_admin.admin_id)
               localStorage.setItem('admin_token', response.data.access_token)
-              // Connexion réussie, ferme le formulaire
-              this.$emit('close-modal')
+              // Connexion réussie
               this.$emit('updateHeader')
             }
             console.log(responseCurrentAdmin.data.current_admin.admin_name)
@@ -60,8 +55,7 @@ export default {
 </script>
 
 <template>
-    
-      
+
     <h2 class="text-center text-white">Connexion Back office</h2>
     <form @submit.prevent="connexion">
       <div class="form-group p-2 text-white">
@@ -75,8 +69,6 @@ export default {
 
       <div class="p-4 d-flex justify-content-center">
           <button type="submit" class="btn buttonConnexion text-center ">Connexion</button>
-          <!-- <router-link  type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
-          <!-- <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
       </div>
     </form>
     
@@ -109,17 +101,8 @@ export default {
   border-radius: 20px;
 }
 .closes {
-  /* margin: 10% 0 0 px; */
   cursor: pointer;
 }
-/* 
-.close-img {
-  width: 25px;
-}
-
-.check {
-  width: 150px;
-} */
 
 h6 {
   font-weight: 500;

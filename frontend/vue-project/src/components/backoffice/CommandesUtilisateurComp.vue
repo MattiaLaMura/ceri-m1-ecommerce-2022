@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios'
-import {getCurrentInstance, defineComponent} from 'vue'
 export default{
     data(){
         return {
@@ -19,14 +18,12 @@ export default{
         async initCommandes(){
             const token = localStorage.getItem('admin_token')
             const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/orders?user_id=" + this.idUtilisateur;
-            // console.log(urlCommandes)
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }});
             
-            // console.log(responseCommandes.data)
             // Récupère info des albums du Commandes
             if(responseCommandes.data != null){
                 for(const albumCommandes of responseCommandes.data.orders){
@@ -44,7 +41,6 @@ export default{
                     }
                 }
             }
-            // console.log(this.listAlbums)
         },
         async changeStatus(idItem,status){
             const token = localStorage.getItem('admin_token')
@@ -80,8 +76,6 @@ export default{
                                 :options="statusCommande"
                                 @update:modelValue="changeStatus(album.itemId,album.itemStatus)"
                                 />
-                               
-                               
                             </div>
                         </div>
                     </div>
@@ -95,8 +89,6 @@ export default{
 img {
     width: 200px; 
     height: 200px;
-    /* margin: auto;     */
-    /* display: block; */
 }
 .card-img-top {
     width: 100%;

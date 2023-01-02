@@ -7,20 +7,17 @@ export default {
     }
   },
   async created() {
+    // Récupère liste des utilisateurs
     const tokenAdmin = localStorage.getItem('admin_token')
     const response = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/users", {
             headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + tokenAdmin
             }});
-    
-    
 
     for(let i = 0 ; i < response.data.users.length; i++){
-      // console.log("user ",utilisateur)
       this.listeUtilisateurs.push({idUtilisateur:response.data.users[i].user_id, nomUtilisateur:response.data.users[i].user_name});
     }
-    
   },
   
 }
@@ -47,52 +44,8 @@ export default {
 
 <style scoped>
 
-h6 {
-  font-weight: 500;
-  font-size: 28px;
-  margin: 20px 0;
-}
-
-p {
-  font-size: 16px;
-  margin: 20px 0;
-}
 a { 
     text-decoration: none; 
 }
-.buttonConnection {
-  background-color: #dc6e00;
-  width: 150px;
-  height: 40px;
-  color: white;
-  font-size: 14px;
-  border-radius: 16px;
-  margin-top: 50px;
-}
 
-.buttonInscription {
-  background-color: #dc6e00;
-  width: 150px;
-  height: 40px;
-  color: white;
-  font-size: 14px;
-  border-radius: 16px;
-}
-
-.buttonPlus {
-  background-color: #dc6e00;
-  width: 40px;
-  height: 40px;
-  color: white;
-  font-size: 14px;
-  border-radius: 16px;
-}
-.buttonMoins {
-  background-color: #bfbdb6;
-  width: 40px;
-  height: 40px;
-  color: white;
-  font-size: 14px;
-  border-radius: 16px;
-}
 </style>
