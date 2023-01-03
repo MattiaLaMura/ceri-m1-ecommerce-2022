@@ -120,3 +120,17 @@ resource "google_cloud_run_service" "frontend" {
     latest_revision = true
   }
 }
+
+resource "google_cloud_run_service_iam_member" "invokers-backend" {
+  location = google_cloud_run_service.backend.location
+  service = google_cloud_run_service.backend.name
+  role    = "roles/run.invoker"
+  member  = "allUsers"
+}
+
+resource "google_cloud_run_service_iam_member" "invokers-frontend" {
+  location = google_cloud_run_service.frontend.location
+  service = google_cloud_run_service.frontend.name
+  role    = "roles/run.invoker"
+  member  = "allUsers"
+}
