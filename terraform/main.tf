@@ -104,7 +104,7 @@ resource "google_cloud_run_service" "frontend" {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1"
         env {
           name = "BACKEND_URL"
-          value = resource.google_cloud_run_service.backend.status[0].url
+          value = resource.google_cloud_run_service.backend.url
         }
       }
     }
@@ -121,16 +121,16 @@ resource "google_cloud_run_service" "frontend" {
   }
 }
 
-# resource "google_cloud_run_service_iam_member" "invokers-backend" {
-#   location = google_cloud_run_service.backend.location
-#   service = google_cloud_run_service.backend.name
-#   role    = "roles/run.invoker"
-#   member  = "allUsers"
-# }
+resource "google_cloud_run_service_iam_member" "invokers-backend" {
+  location = google_cloud_run_service.backend.location
+  service = google_cloud_run_service.backend.name
+  role    = "roles/run.invoker"
+  member  = "allUsers"
+}
 
-# resource "google_cloud_run_service_iam_member" "invokers-frontend" {
-#   location = google_cloud_run_service.frontend.location
-#   service = google_cloud_run_service.frontend.name
-#   role    = "roles/run.invoker"
-#   member  = "allUsers"
-# }
+resource "google_cloud_run_service_iam_member" "invokers-frontend" {
+  location = google_cloud_run_service.frontend.location
+  service = google_cloud_run_service.frontend.name
+  role    = "roles/run.invoker"
+  member  = "allUsers"
+}
