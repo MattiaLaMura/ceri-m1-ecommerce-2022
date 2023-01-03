@@ -19,7 +19,7 @@ docker run -d -p 3306:3306 --name db -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DA
 
 docker build -t backend -f backend.Dockerfile . && docker run -d --name backend --env-file .env -p 8000:22 backend
 
-docker build -t frontend -f frontend.Dockerfile . && docker run -d --name frontend --env-file .env -p 8001:80 frontend
+docker build -t frontend -f frontend.Dockerfile . && docker run -d --name frontend --env-file .env -p 8001:1111 frontend
 ```
 The **Backend** is now accessible on the following *url*:
 > localhost:8000
