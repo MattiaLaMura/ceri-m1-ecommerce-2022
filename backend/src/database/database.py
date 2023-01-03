@@ -15,7 +15,7 @@ class Database:
         self.connection = sql.connect(user=Settings().dict()['user'],
                                       password=Settings().dict()['password'],
                                       host=Settings().dict()['host'],
-                                      port=Settings().dict()['port'],
+                                      port=Settings().dict()['mysql_port'],
                                       database=Settings().dict()['dbname'])
         # Create a cursor to perform database operations
         self.cursor = self.connection.cursor(dictionary=True)
