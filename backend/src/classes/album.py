@@ -25,3 +25,15 @@ def get_albums_from_artist(artist_id: int):
     albums = my_database.get_albums(str(artist_id))
     my_database.close()
     return [Album(**album) for album in albums]
+
+
+def get_all_albums():
+    """ This method gets all the albums.
+
+    :return: The list of all the albums
+    :rtype: list[Artist]
+    """
+    my_database = Database()
+    albums = my_database.get_all_albums()
+    my_database.close()
+    return [Album(**album) for album in albums]

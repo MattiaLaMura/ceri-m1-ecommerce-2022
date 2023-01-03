@@ -15,6 +15,7 @@ from src.classes.admin import Admin, create_admin, authentication as admin_authe
 from src.classes.user import authentication, get_password_hash, \
     verify_email, get_users, create_user, User
 from src.database.database import Database
+from src.classes.algolia import index_catalog, search_engine
 
 # Initialize the API
 app = FastAPI(title='Jean Cloud Vinyl Backend',
@@ -147,6 +148,13 @@ def add_song(album_id: int, song_title: str, song_length: int,
     my_database.add_song(album_id, song_title, song_length)
     my_database.close()
     return {'message': 'A new song has been added to the database.'}
+
+
+@app.get('/search_engine', tags=['Search Engine'], status_code=status.HTTP_200_OK)
+def search(word_searched: str):
+    """ This route uses the Algolia search engine. """
+    index_catalog()
+    return {'result': search_engine(word_searched)}
 
 
 @app.get('/add/item', tags=['Add Item'], status_code=status.HTTP_200_OK)

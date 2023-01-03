@@ -11,3 +11,6 @@ class Settings(BaseSettings):
     port: str
     dbname: str
     secret_key: str
+    algolia_application_id: str
+    algolia_api_key: str
+    algolia_index_name: str

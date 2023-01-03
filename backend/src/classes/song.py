@@ -23,3 +23,15 @@ def get_songs_from_album(album_id: int):
     songs = my_database.get_songs(str(album_id))
     my_database.close()
     return [Song(**song) for song in songs]
+
+
+def get_all_songs():
+    """ This method gets all the songs.
+
+    :return: The list of all the songs
+    :rtype: list[Song]
+    """
+    my_database = Database()
+    songs = my_database.get_all_songs()
+    my_database.close()
+    return [Song(**song) for song in songs]

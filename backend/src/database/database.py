@@ -59,6 +59,15 @@ class Database:
                             f'"{album_title}", "{album_year}", "{album_cover}");')
         self.connection.commit()
 
+    def get_all_albums(self):
+        """ This method gets all the albums.
+
+        :return: The list of all the albums
+        :rtype: list[dict]
+        """
+        self.cursor.execute('SELECT * from album')
+        return self.cursor.fetchall()
+
     def get_albums(self, artist_id: str):
         """ This method gets all the albums of an artist.
 
@@ -78,6 +87,15 @@ class Database:
                             'VALUES ((select album_id FROM album WHERE album_id = '
                             f'{album_id}), "{song_title}", {song_length});')
         self.connection.commit()
+
+    def get_all_songs(self):
+        """ This method gets all the songs.
+
+        :return: The list of all the songs
+        :rtype: list[dict]
+        """
+        self.cursor.execute('SELECT * from song')
+        return self.cursor.fetchall()
 
     def get_songs(self, album_id: str):
         """ This method gets all the songs of an album.
