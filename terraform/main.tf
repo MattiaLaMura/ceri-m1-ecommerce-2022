@@ -91,10 +91,10 @@ resource "google_cloud_run_service" "backend" {
     percent = 100
     latest_revision = true
   }
-}
 
-output "cloud_run_instance_url" {
-  value = google_cloud_run_service.backend.status.0.url
+  output "cloud_run_instance_url"{
+    value = google_cloud_run_service.backend.status.0.url
+  }
 }
 
 resource "google_cloud_run_service" "frontend" {
@@ -108,7 +108,7 @@ resource "google_cloud_run_service" "frontend" {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1"
         env {
           name = "BACKEND_URL"
-          value = output.cloud_run_instance_url.value
+          value = module.backend.cloud_run_instance_url
         }
       }
     }
