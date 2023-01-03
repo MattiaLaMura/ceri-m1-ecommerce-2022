@@ -14,7 +14,7 @@ export default{
         async ajoutPanier(){
             const token = localStorage.getItem('user_token')
             
-            const urlAjoutPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/add/item?"
+            const urlAjoutPanier =import.meta.env.VITE_BACKEND_URL+"/add/item?"
             const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
 
             const responseAjoutPanier= await axios.get(urlAjoutPanier + paramAjourPanier, {

@@ -14,11 +14,11 @@ export default{
     async created() {
         // Récupère liste des albums
         console.log(import.meta.env.VITE_BACKEND_URL)
-        const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
+        const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.album_id, artist:artist.artist_name, imageAlbum:album.album_image_url})
