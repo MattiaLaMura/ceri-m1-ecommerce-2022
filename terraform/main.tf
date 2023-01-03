@@ -86,7 +86,7 @@ resource "google_cloud_run_service" "backend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "22"
+        "seed" = "Si tu souhaite redeployer le service avec le meme tag d'image, changer cette string."
       }
     }
   }
@@ -108,7 +108,7 @@ resource "google_cloud_run_service" "frontend" {
       containers {
         image = "europe-west1-docker.pkg.dev/ceri-m1-ecommerce-2022/purplepig/frontend:0.0.1"
         env {
-          name = "BACKEND_URL"
+          name = "VITE_BACKEND_URL"
           value = google_cloud_run_service.backend.status.0.url
         }
         ports {
@@ -119,7 +119,7 @@ resource "google_cloud_run_service" "frontend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "22"
+        "seed" = "Si tu souhaite redeployer le service avec le meme tag d'image, changer cette string."
       }
     }
   }
