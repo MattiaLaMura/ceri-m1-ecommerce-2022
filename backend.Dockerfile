@@ -9,4 +9,4 @@ WORKDIR app
 RUN python -m pip install --no-cache-dir --upgrade -r requirements.txt
 RUN pip install -e .
 
-CMD ["gunicorn", "main:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:22", "--timeout", "600"]
+CMD ["gunicorn", "main:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:${PORT}", "--timeout", "600"]
