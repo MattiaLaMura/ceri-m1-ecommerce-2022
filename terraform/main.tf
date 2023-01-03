@@ -78,6 +78,9 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
+        ports {
+          container_port = 2222
+        }
       }
     }
     metadata {
