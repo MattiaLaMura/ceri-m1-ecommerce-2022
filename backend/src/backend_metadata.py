@@ -11,7 +11,7 @@ TAGS_METADATA = [
     {
         'name': 'Search Engine',
         'description': 'This route uses the **Algolia search engine**.'
-    }
+    },
     {
         'name': 'Create Database',
         'description': 'This route **creates** the *Backend database*.',

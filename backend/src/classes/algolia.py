@@ -13,7 +13,6 @@ def index_catalog():
     """ This method uses Algolia to index the catalog. """
     artists = get_all_artists()
     albums = get_all_albums()
-    songs = get_all_songs()
     for artist in artists:
         try:
             # Try to retrieve the object from the index
@@ -29,12 +28,6 @@ def index_catalog():
             index.update_object(album)
         except algoliasearch.AlgoliaException:
             index.add_object(album)
-    for song in songs:
-        try:
-            index.get_object(song.song_id)
-            index.update_object(song)
-        except algoliasearch.AlgoliaException:
-            index.add_object(song)
 
 
 def search_engine(word_searched: str):
