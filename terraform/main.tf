@@ -112,8 +112,7 @@ resource "google_cloud_run_service" "frontend" {
           value = google_cloud_run_service.backend.status.0.url
         }
         ports {
-          internal = 80
-          external = 1111
+          container_port = 1111
         }
       }
     }
