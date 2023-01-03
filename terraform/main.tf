@@ -86,6 +86,7 @@ resource "google_cloud_run_service" "backend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
+        "seed" = "22"
       }
     }
   }
@@ -109,6 +110,9 @@ resource "google_cloud_run_service" "frontend" {
         env {
           name = "BACKEND_URL"
           value = google_cloud_run_service.backend.status.0.url
+        }
+        ports {
+          container_port = 1111
         }
       }
     }
