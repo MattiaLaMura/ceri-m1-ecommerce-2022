@@ -39,9 +39,16 @@ CREATE TABLE IF NOT EXISTS item (
     album_id INT,
     user_id INT,
     paid BOOLEAN NOT NULL DEFAULT FALSE,
+    delivery VARCHAR(255) NOT NULL,
     PRIMARY KEY (item_id, album_id, user_id),
         FOREIGN KEY (album_id)
             REFERENCES album (album_id),
         FOREIGN KEY (user_id)
             REFERENCES user (user_id)
+);
+
+CREATE TABLE IF NOT EXISTS admin (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_name VARCHAR(255) NOT NULL,
+    admin_password VARCHAR(255) NOT NULL
 );

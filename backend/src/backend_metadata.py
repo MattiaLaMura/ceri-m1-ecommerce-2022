@@ -17,8 +17,16 @@ TAGS_METADATA = [
         'description': 'This route **adds** a *new user* in the database.',
     },
     {
+        'name': 'Add Admin',
+        'description': 'This route **adds** a *new admin* in the database.',
+    },
+    {
         'name': 'Token',
         'description': 'This route takes an *email*, a *password*, and it returns a **token**.',
+    },
+    {
+        'name': 'Token BackOffice',
+        'description': 'This route takes a *name*, a *password*, and it returns a **token**.',
     },
     {
         'name': 'Get Users',
@@ -27,6 +35,14 @@ TAGS_METADATA = [
     {
         'name': 'Get Current User',
         'description': 'This route **gets** all the information of the *current user*.',
+    },
+    {
+        'name': 'Get Orders',
+        'description': 'This route **gets** all the orders of a *user*.',
+    },
+    {
+        'name': 'Get Current Admin',
+        'description': 'This route **gets** all the information of the *current admin*.',
     },
     {
         'name': 'Add Artist',
@@ -67,5 +83,9 @@ TAGS_METADATA = [
     {
         'name': 'Remove Item',
         'description': 'This route allows the *user* to **remove** an *item* from the database.',
+    },
+    {
+        'name': 'Update Item',
+        'description': 'This route allows the *admin* to **update** an *item* from the database.',
     },
 ]

@@ -63,7 +63,7 @@ def get_user(email: str):
 def authentication(email: str, password: str):
     """ This method checks if a user is valid or not.
 
-    :param email: The eamil of the user
+    :param email: The email of the user
     :type email: str
     :param password: The password of the user
     :type password: str
@@ -96,8 +96,7 @@ def verify_password(plain_password, hashed_password):
     :type plain_password: str
     :param hashed_password: The hashed password of the user
     :type hashed_password: str
-    :return: boolif not validate_email(email, verify=True):
-        return False  # Email not validFalse if not
+    :return: True if the password is valid, False if not
     """
     return pwd_context.verify(plain_password, hashed_password)
 

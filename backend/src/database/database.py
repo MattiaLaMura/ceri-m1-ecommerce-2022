@@ -91,6 +91,32 @@ class Database:
             'SELECT * from song WHERE album_id=%s', (album_id,))
         return self.cursor.fetchall()
 
+    # Admin Table
+    def get_admin_by_name(self, name):
+        """ This method gets an admin using a name.
+
+        :param name: The admin name
+        :type name: str
+        :return: The admin information
+        :rtype: dict
+        """
+        self.cursor.execute(
+            'SELECT * from admin WHERE admin_name = %s', (name,))
+        admin = self.cursor.fetchone()
+        return admin
+
+    def add_admin(self, admin_name, admin_password):
+        """ This method adds a new user in the database.
+
+        :param admin_name: The admin name
+        :type admin_name: str
+        :param admin_password: The hashed password of the admin
+        :type admin_password: str
+        """
+        self.cursor.execute('INSERT into admin (admin_name, admin_password) values '
+                            '(%s, %s)', (admin_name, admin_password))
+        self.connection.commit()
+
     # User Table
     def add_user(self, user_email, user_name, user_password):
         """ This method adds a new user in the database.
@@ -123,7 +149,8 @@ class Database:
         :return: The user information
         :rtype: dict
         """
-        self.cursor.execute('SELECT * from user WHERE user_email = %s', (email,))
+        self.cursor.execute(
+            'SELECT * from user WHERE user_email = %s', (email,))
         user = self.cursor.fetchone()
         return user
 
@@ -149,9 +176,9 @@ class Database:
         :param paid: if the item is still on the cart or not
         :type paid: bool
         """
-        self.cursor.execute('INSERT INTO item (album_id, user_id, paid) '
+        self.cursor.execute('INSERT INTO item (album_id, user_id, paid, delivery) '
                             f'VALUES ((select album_id FROM album WHERE album_id = {album_id}), '
-                            f'(select user_id FROM user WHERE user_id = {user_id}), {paid});')
+                            f'(select user_id FROM user WHERE user_id = {user_id}), {paid}, " ");')
         self.connection.commit()
 
     def get_items(self, user_id: int):
@@ -173,6 +200,8 @@ class Database:
         """
         self.cursor.execute(f'UPDATE item SET paid = TRUE WHERE user_id = {user_id}'
                             f' and item_id = {item_id}')
+        self.cursor.execute(f'UPDATE item SET delivery = "En cours" WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
         self.connection.commit()
         return self.cursor.rowcount
 
@@ -187,6 +216,21 @@ class Database:
         :rtype: int
         """
         self.cursor.execute(f'DELETE from item WHERE user_id = {user_id}'
+                            f' and item_id = {item_id}')
+        self.connection.commit()
+        return self.cursor.rowcount
+
+    def update_item(self, item_id: int, user_id: int, status: str):
+        """ This method updates an item in the database.
+
+        :param user_id: The user id
+        :type user_id: int
+        :param item_id: The item id
+        :type item_id: int
+        :param status: The item status
+        :type status: str
+        """
+        self.cursor.execute(f'UPDATE item SET delivery = "{status}" WHERE user_id = {user_id}'
                             f' and item_id = {item_id}')
         self.connection.commit()
         return self.cursor.rowcount
