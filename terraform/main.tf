@@ -94,10 +94,6 @@ resource "google_cloud_run_service" "backend" {
 
 }
 
-output "cloud_run_instance_url"{
-  value = google_cloud_run_service.backend.status.0.url
-}
-
 resource "google_cloud_run_service" "frontend" {
   name     = "purplepig-frontend"
   location = "europe-west1"
