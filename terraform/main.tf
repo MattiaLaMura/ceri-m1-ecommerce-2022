@@ -30,7 +30,7 @@ data "google_secret_manager_secret" "dbname" {
 }
 
 resource "google_cloud_run_service" "backend" {
-  name     = "backend"
+  name     = "purplepig-backend"
   location = "europe-west1"
 
   template {
@@ -94,7 +94,7 @@ resource "google_cloud_run_service" "backend" {
 }
 
 resource "google_cloud_run_service" "frontend" {
-  name     = "frontend"
+  name     = "purplepig-frontend"
   location = "europe-west1"
 
   template {
