@@ -112,6 +112,7 @@ resource "google_cloud_run_service" "frontend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
+        "seed" = "22"
       }
     }
   }
@@ -134,4 +135,12 @@ resource "google_cloud_run_service_iam_member" "invokers-frontend" {
   service = google_cloud_run_service.frontend.name
   role    = "roles/run.invoker"
   member  = "allUsers"
+}
+
+output "back_url"{
+  value = google_cloud_run_service.backend.status.0.url
+}
+
+output "front_url"{
+  value = google_cloud_run_service.frontend.status.0.url
 }
