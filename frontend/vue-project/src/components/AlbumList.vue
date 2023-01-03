@@ -13,6 +13,7 @@ export default{
     },
     async created() {
         // Récupère liste des albums
+        console.log(import.meta.env.VITE_BACKEND_URL)
         const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
@@ -24,9 +25,14 @@ export default{
             }
         }
 
+
+        // this.$on('recherche_terminée', this.handleRecherche)
+
     },
     methods:{
-      
+        handleRecherche(items) {
+            console.log(items) // accès aux données ici
+        }
     }
 
 }

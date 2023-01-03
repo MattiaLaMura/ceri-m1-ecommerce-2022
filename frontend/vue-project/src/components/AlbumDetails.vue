@@ -55,18 +55,18 @@ export default{
         } else this.user_name = '';
 
         // Récupère les données de l'album
-        const responseSongs = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/songs?album_id="+this.idAlbum);
+        const responseSongs = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/songs?album_id="+this.idAlbum);
         const dataSongs = await responseSongs.json();
         
         for(const song of dataSongs.songs){
             this.listeMusique.push({titre:song.song_title})
         }
 
-        const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
+        const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 if(album.album_id == this.idAlbum){

@@ -17,7 +17,7 @@ export default {
 
           this.email.replace('@', '%40')
 
-          const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/token"
+          const url = import.meta.env.VITE_BACKEND_URL+"/token"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -39,7 +39,7 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentUser = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/current/user"
+            const urlCurrentUser = import.meta.env.VITE_BACKEND_URL+"/get/current/user"
 
             const responseCurrentUser = await axios.get(urlCurrentUser, {
               headers: {

@@ -12,7 +12,7 @@ export default{
     methods:{
         async initPanier(){
             const token = localStorage.getItem('user_token')
-            const urlPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/items"
+            const urlPanier = import.meta.env.VITE_BACKEND_URL+"/get/items"
 
             const responsePanier = await axios.get(urlPanier, {
                 headers: {
@@ -25,10 +25,10 @@ export default{
             if(responsePanier.data != null){
                 for(const albumPanier of responsePanier.data.items){
                     
-                    const responseArtists = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists")
+                    const responseArtists = await axios.get(import.meta.env.VITE_BACKEND_URL+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumPanier.album_id == album.album_id && albumPanier.paid == false){
@@ -42,7 +42,7 @@ export default{
         },
         async enleverPanier(item_id){
             const token = localStorage.getItem('user_token')
-            const urlEnleverPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/remove/item"
+            const urlEnleverPanier = import.meta.env.VITE_BACKEND_URL+"/remove/item"
             const paramEnleverPanier = "?item_id="+ item_id
             const responseEnleverPanier = await axios.get(urlEnleverPanier + paramEnleverPanier, {
                 headers: {
@@ -53,7 +53,7 @@ export default{
         },
         async acheterPanier(){
             const token = localStorage.getItem('user_token')
-            const urlAcheterPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/buy/items"
+            const urlAcheterPanier = import.meta.env.VITE_BACKEND_URL+"/buy/items"
             
             for(const album of this.listAlbums){
                 const paramAcheterPanier = "?item_id="+ album.itemId
