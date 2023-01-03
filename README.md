@@ -1,18 +1,16 @@
 # S-E06-0632: Projet e-commerce
 
-[![slack](https://img.shields.io/badge/slack-join-yellow.svg?logo=slack)](https://join.slack.com/t/cerim1ecommer-qy81374/shared_invite/zt-1hgh8de7q-v1Mb4g6rwPH6yNzmU7bKNA)
-
 To run the project, you need to create a **.env** file in the *root* folder and copy the following lines:
 ```text
-USER=DB_user_name
-PASSWORD=DB_password
-HOST=DB_host
-PORT=DB_port
-DBNAME=DB_name
-SECRET_KEY=key
-VITE_BACKEND_URL=backend_url
+USER=<DB User>
+PASSWORD=<DB Password>
+HOST=<DB Host>
+PORT=<DB Port>
+DBNAME=<DB Name>
+SECRET_KEY=<random key for auth service>
+VITE_BACKEND_URL=<Backend Url>
 ```
-This file will be used to stock the environment variables and pass them to the ```docker run --env-file```.
+This file will be used to stock the environment variables and pass them to the ```docker run```.
 
 To build and run it, you just need to execute the following commands:
 ```shell
