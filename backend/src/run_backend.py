@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from globals import TOKEN_EXPIRE_MINUTES
 from src.backend_metadata import DESCRIPTION, TAGS_METADATA
 from src.classes.artist import get_all_artists
-from src.classes.album import get_albums_from_artist
+from src.classes.album import get_albums_from_artist, get_album_from_id
 from src.classes.song import get_songs_from_album
 from src.classes.item import create_item, get_items, buy_item, delete_item, update_item
 from src.classes.token import Token, create_access_token, get_current_user, \
@@ -184,6 +184,17 @@ def get_albums(artist_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=str(exc)) from exc
     return {'albums': albums}
+
+
+@app.get('/get/album', tags=['Get Album'], status_code=status.HTTP_200_OK)
+def get_album(album_id: int):
+    """ This route gets an album from the database. """
+    try:
+        album = get_album_from_id(album_id)
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=str(exc)) from exc
+    return {'album': album}
 
 
 @app.get('/get/songs', tags=['Get Songs'], status_code=status.HTTP_200_OK)

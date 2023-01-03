@@ -80,6 +80,18 @@ class Database:
             'SELECT * from album WHERE artist_id=%s', (artist_id,))
         return self.cursor.fetchall()
 
+    def get_album(self, album_id: str):
+        """ This method gets an album.
+
+        :param album_id: The album id
+        :type album_id: str
+        :return: The album
+        :rtype: dict
+        """
+        self.cursor.execute(
+            'SELECT * from album WHERE album_id=%s', (album_id,))
+        return self.cursor.fetchone()
+
     # Song Table
     def add_song(self, album_id, song_title, song_length):
         """ This method adds a new song. """
