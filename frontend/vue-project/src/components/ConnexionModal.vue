@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
-
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 export default {
   data() {
     return {
@@ -9,20 +10,6 @@ export default {
     }
   },
   methods:{
-        // token(username, password){
-        //   username.replace('@', '%40');
-        //   url = 'http://localhost:8002/token';
-        //   headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-        //   data = 'grant_type=&username=' + username + '&password=' + password + '&scope=&client_id=&client_secret=';
-        //   response = requests.post(url=url, headers=headers, data=data);
-        //   if response.status_code != 200{
-        //       print('It does not work...')
-        //       return None
-        //   }
-        //   access_token = response.json()['access_token']
-        //   return access_token
-        // }
-
         async connexion(submitEvent){
 
           this.email = submitEvent.target.elements.email.value;
@@ -30,14 +17,21 @@ export default {
 
           this.email.replace('@', '%40')
 
-          const url = 'http://localhost:8000/token'
+          const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/token"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
           };
         
           const param = 'grant_type=&username=' + this.email.replace('@', '%40') + '&password=' + this.password+ '&scope=&client_id=&client_secret=';
-          const response = await axios.post(url ,param, {headers})
+          const response = await axios.post(url ,param, {headers}).catch(function (error) {
+            console.log("error connexion")
+            useToast().error('Connection échouée.', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+            });
+          })
           
           if(response.data != null){
             const token = response.data.access_token
@@ -45,11 +39,8 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentUser = "http://localhost:8000/get/current/user"
-            const headersCurrentUser = { 
-              'Accept': 'application/json',
-              'Authorization': 'Bearer ' + token
-            };
+            const urlCurrentUser = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/current/user"
+
             const responseCurrentUser = await axios.get(urlCurrentUser, {
               headers: {
                 'Accept': 'application/json',
@@ -65,7 +56,13 @@ export default {
               this.$emit('updateHeader')
             }
             console.log(responseCurrentUser.data.current_user.user_name)
-          } else console.log("error connexion")
+            
+            useToast().success('Connection réussie. Bonjour '+ responseCurrentUser.data.current_user.user_name, {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+            });
+          }
         }
     }
 }
@@ -84,10 +81,10 @@ export default {
                 <label for="exampleInputPassword1">Mot de passe</label>
                 <input type="password" class="form-control" id="InputPassword" name="password" placeholder="Entrez votre mot de passe">
             </div>
-            <button type="submit" class="btn btn-primary p-2 buttonConnection">Se connecter</button>
+            <button type="submit" class="btn p-2 buttonConnection">Se connecter</button>
             <div class="p-2">
                 <p>Pas encore de compte?</p>
-                <router-link  to="/inscription" class="btn btn-primary buttonInscription text-white" aria-current="page"  @click="$emit('close-modal')">S'inscrire</router-link>
+                <router-link  to="/inscription" class="btn buttonInscription text-white" aria-current="page"  @click="$emit('close-modal')">S'inscrire</router-link>
             </div>
         </form>
       </div>
@@ -124,17 +121,8 @@ export default {
   border-radius: 20px;
 }
 .closes {
-  /* margin: 10% 0 0 px; */
   cursor: pointer;
 }
-/* 
-.close-img {
-  width: 25px;
-}
-
-.check {
-  width: 150px;
-} */
 
 h6 {
   font-weight: 500;

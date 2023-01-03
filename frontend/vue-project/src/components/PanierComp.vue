@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios'
-import {getCurrentInstance, defineComponent} from 'vue'
 export default{
     data(){
         return {
@@ -13,7 +12,7 @@ export default{
     methods:{
         async initPanier(){
             const token = localStorage.getItem('user_token')
-            const urlPanier = "http://localhost:8000/get/items"
+            const urlPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/items"
 
             const responsePanier = await axios.get(urlPanier, {
                 headers: {
@@ -26,14 +25,14 @@ export default{
             if(responsePanier.data != null){
                 for(const albumPanier of responsePanier.data.items){
                     
-                    const responseArtists = await axios.get("http://localhost:8000/get/artists")
+                    const responseArtists = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get("http://localhost:8000/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumPanier.album_id == album.album_id && albumPanier.paid == false){
-                                this.listAlbums.push({itemId:albumPanier.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url})
+                                this.listAlbums.push({itemId:albumPanier.item_id,nomAlbum:album.album_title, artist:artist.artist_name, imageAlbum:album.album_image_url})
                             }
                         }
                     }
@@ -42,9 +41,8 @@ export default{
             console.log(this.listAlbums)
         },
         async enleverPanier(item_id){
-            
             const token = localStorage.getItem('user_token')
-            const urlEnleverPanier = "http://localhost:8000/remove/item"
+            const urlEnleverPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/remove/item"
             const paramEnleverPanier = "?item_id="+ item_id
             const responseEnleverPanier = await axios.get(urlEnleverPanier + paramEnleverPanier, {
                 headers: {
@@ -55,7 +53,7 @@ export default{
         },
         async acheterPanier(){
             const token = localStorage.getItem('user_token')
-            const urlAcheterPanier = "http://localhost:8000/buy/items"
+            const urlAcheterPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/buy/items"
             
             for(const album of this.listAlbums){
                 const paramAcheterPanier = "?item_id="+ album.itemId
@@ -86,7 +84,7 @@ export default{
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <div class="text-white">{{album.nomAlbum}}</div>
+                                <div class="text-white">{{album.nomAlbum}} - {{album.artist}}</div>
                                 <a v-on:click="enleverPanier(album.itemId); listAlbums.splice(index, 1)" href="#" class="">Supprimer du panier</a>
                             </div>
                         </div>
@@ -107,8 +105,6 @@ export default{
 img {
     width: 200px; 
     height: 200px;
-    /* margin: auto;     */
-    /* display: block; */
 }
 .card-img-top {
     width: 100%;

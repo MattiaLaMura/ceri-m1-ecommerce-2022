@@ -12,6 +12,17 @@ export default defineConfig({
     }
   },
 })
+
+// const Dotenv = require('dotenv-webpack');
+
+
+// module.exports = {
+//   configureWebpack: {
+//     plugins: [
+//       new Dotenv()
+//     ]
+//   }
+// }
 // module.exports = {
 //   publicPath: process.env.NODE_ENV === 'production' ? '' : 'public'
 // };

@@ -1,32 +1,32 @@
 <script>
 import axios from 'axios'
-import {getCurrentInstance, defineComponent} from 'vue'
-
 export default{
     data(){
         return {
             listAlbums:[],
-            
+            selectedStatus: "",
+            statusCommande: ["En préparation","Envoyé","En cours","Livré"]
         }
+    },
+    props: {
+        idUtilisateur :{ required: true }
     },
     async created(){
         this.initCommandes()
     },
     methods:{
         async initCommandes(){
-            const token = localStorage.getItem('user_token')
-            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/items"
-
+            const token = localStorage.getItem('admin_token')
+            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/get/orders?user_id=" + this.idUtilisateur;
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }});
             
-            console.log(responseCommandes.data.items)
             // Récupère info des albums du Commandes
             if(responseCommandes.data != null){
-                for(const albumCommandes of responseCommandes.data.items){
+                for(const albumCommandes of responseCommandes.data.orders){
                     
                     const responseArtists = await axios.get("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists")
                     
@@ -35,13 +35,24 @@ export default{
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){
-                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, artist:artist.artist_name, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
+                                this.listAlbums.push({itemId:albumCommandes.item_id,nomAlbum:album.album_title, imageAlbum:album.album_image_url, itemStatus:albumCommandes.delivery})
                             }
                         }
                     }
                 }
             }
-            console.log(this.listAlbums)
+        },
+        async changeStatus(idItem,status){
+            const token = localStorage.getItem('admin_token')
+            const urlCommandes = "http://"+import.meta.env.VITE_BACKEND_URL+"/update/item?item_id="+ idItem +"&user_id=" + this.idUtilisateur + "&item_status=" + status;
+            console.log(urlCommandes)
+            const responseCommandes = await axios.get(urlCommandes, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }});
+            
+            console.log(responseCommandes.data)
         }
     }
 }
@@ -49,7 +60,7 @@ export default{
 
 <template>
    
-   <div class="container">
+    <div class="container">
         <div class="row">
                 <div v-for="(album,index) in listAlbums" :key="index" >
                     <div class = p-4>
@@ -58,9 +69,13 @@ export default{
                                 <img v-bind:src=album.imageAlbum class="img-fluid">
                             </div>
                             <div class="col-lg-8 ">
-                                <h3 class="text-white">{{album.nomAlbum}} - {{album.artist}}</h3>
-                                <div class="text-white">Status : {{album.itemStatus}}</div>
-                                
+                                <h3 class="text-white">{{album.nomAlbum}}</h3>
+                                <div  class="text-white">Status : {{album.itemStatus}}</div><br />
+                                <v-select class="bg-white" 
+                                v-model="album.itemStatus"
+                                :options="statusCommande"
+                                @update:modelValue="changeStatus(album.itemId,album.itemStatus)"
+                                />
                             </div>
                         </div>
                     </div>

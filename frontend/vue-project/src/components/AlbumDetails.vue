@@ -1,10 +1,10 @@
 <script>
 import axios from 'axios'
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 export default{
     
     setup() {
-        // const imageUrl = new URL("images/albums/", import.meta.url).href;
-        // return { imageUrl };
     },
     props: {
         idAlbum :{ required: true },
@@ -14,58 +14,71 @@ export default{
         async ajoutPanier(){
             const token = localStorage.getItem('user_token')
             
-            // Recupere donnees de l'utilisateur
-            const urlAjoutPanier = "http://localhost:8000/add/item?"
+            const urlAjoutPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/add/item?"
             const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
-            const headersAjoutPanier = { 
-                'Accept': 'application/json',
-                'Authorization': 'Bearer ' + token
-            };
+
             const responseAjoutPanier= await axios.get(urlAjoutPanier + paramAjourPanier, {
                 headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + token
-                }});
+                }}).catch(function(error) {
+                    useToast().error('Erreur serveur.', {
+                        position: 'top',
+                        dismissible:'true',
+                        duration:'5000'
+                    });
+                });
+
+
+            useToast().success('Album ajouté au panier', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+            });
             console.log(responseAjoutPanier.data)
         }
     },
     data(){
         return {
-            nomAlbum: " ",
+            user_name:"",
+            nomAlbum: "",
             artist: "",
             imageAlbum: "",
-            listeMusique:[
-                // {titre:"Musique 1"},
-                // {titre:"Musique 2"},
-                // {titre:"Musique 3"},
-                // {titre:"Musique 4"},
-                // {titre:"Musique 5"}
-            ]
+            anneeAlbum: "",
+            listeMusique:[]
         }
     },
     async created() {
-        const responseSongs = await fetch("http://localhost:8000/get/songs?album_id="+this.idAlbum);
+        // Afficharge ou non du bouton ajout panier
+        if(localStorage.getItem('user_name') != null){
+            this.user_name = localStorage.getItem('user_name')
+        } else this.user_name = '';
+
+        // Récupère les données de l'album
+        const responseSongs = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/songs?album_id="+this.idAlbum);
         const dataSongs = await responseSongs.json();
         
         for(const song of dataSongs.songs){
             this.listeMusique.push({titre:song.song_title})
         }
 
-        const responseArtist = await fetch("http://localhost:8000/get/artists");
+        const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch("http://localhost:8000/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 if(album.album_id == this.idAlbum){
                     this.nomAlbum = album.album_title;
                     this.artist = artist.artist_name; 
                     this.imageAlbum = album.album_image_url;
+                    this.anneeAlbum = album.album_year.slice(0,4);
                 }
             }
         }
     },
+    
     
 
 }
@@ -74,26 +87,28 @@ export default{
 <template>
    
    <div class = "container">
-        <div class="row text-white py-4"><h3>Albums</h3></div>
+        <div class="row text-white py-4"><h3>{{nomAlbum}} - {{ artist }} - {{ anneeAlbum }}</h3></div>
         <div class="row">
 
             <div class="col-lg-5">
                 <img v-bind:src="imageAlbum" class="card-img-top">
             </div>
 
-            <div class="col-lg-7">
-                <h3 class="card-text text-white py-3">{{nomAlbum}}</h3>
-                <div class="p-2 text-white " v-for="(musique, index) in listeMusique" :key="musique.id">
-                            <div class="rounded-2 bg-dark">
-                                <div class="p-2">
-                                    {{index+1}}&nbsp;&nbsp;    {{musique.titre}}
-                                </div>
-                            </div>
+            <div class="col-lg-5">
+                <div v-if="user_name != ''" class="p-4 d-flex justify-content-center">
+                    <button v-on:click="ajoutPanier()" type="submit" class="btn buttonPanier  ">Ajouter au panier</button>
                 </div>
-                <button v-on:click="ajoutPanier()" type="submit" class="btn buttonPanier text-center ">Ajouter au panier</button>
+
+                <hr class="bg-danger border-2 border-top ">
+                <h4 class="text-white text-center py-3">Contenu</h4>
+                <div class="p-2 text-white " v-for="(musique, index) in listeMusique" :key="musique.id">
+                    <div class="rounded-2 bg-dark">
+                        <div class="p-2">
+                            {{index+1}}&nbsp;&nbsp;    {{musique.titre}}
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         </div>
    </div>
 </template>

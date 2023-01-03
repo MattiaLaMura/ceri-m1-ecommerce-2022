@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios'
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 export default {
   data() {
     return {
@@ -9,27 +11,33 @@ export default {
     }
   },
   methods:{
-
-
         async inscription(submitEvent){
 
           this.username = submitEvent.target.elements.username.value;
           this.email = submitEvent.target.elements.email.value;
           this.password = submitEvent.target.elements.password.value;
-        
-          const headers = { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          };
+
+          const url = "http://"+import.meta.env.VITE_BACKEND_URL+"/signup?"
           const param = 'user_name=' + this.username + '&user_email=' + this.email + '&user_password=' + this.password;
-          const response = await axios.post("http://localhost:8000/signup?"+param);
+          const response = await axios.post(url+param).catch(function(error){
+            console.log("error inscription")
+            useToast().error('Inscription échouée.', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+            });
+          })
+
+          useToast().success('Inscription réussie', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+          });
           console.log(response.data)
-          this.$router.push('/')
+          if(response.data != null){
+            this.$router.push('/');
+          } else console.log("Erreur inscription");
         }
-        
-
-
-
     }
 }
 
@@ -57,9 +65,7 @@ export default {
           <input type="password" class="form-control" id="InputPassword" placeholder="Confirmation mot de passe">
       </div>
       <div class="p-4 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary buttonInscription text-center ">Créé mon compte</button>
-          <!-- <router-link  type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
-          <!-- <router-link type="submit" to="/" class="btn btn-primary buttonInscription text-white" aria-current="page">Créé mon compte</router-link> -->
+          <button type="submit" class="btn buttonInscription text-center ">Créé mon compte</button>
       </div>
   </form>
 </template>

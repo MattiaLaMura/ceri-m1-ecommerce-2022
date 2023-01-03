@@ -1,6 +1,5 @@
 <script>
-import { processExpression } from '@vue/compiler-core';
-import Album from './Album.vue'
+import Album from '../Album.vue'
 export default{
     
     components: {
@@ -9,10 +8,11 @@ export default{
     data(){
         return {
             listAlbums:[],
+            plusImg :'https://p.kindpng.com/picc/s/712-7123671_plus-sign-circle-png-clipart-png-download-black.png'
         }
     },
     async created() {
-        // Récupère liste des albums
+        // Récupère la liste des albums
         const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
         const dataArtist = await responseArtist.json();
   
@@ -23,10 +23,6 @@ export default{
                 this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.album_id, artist:artist.artist_name, imageAlbum:album.album_image_url})
             }
         }
-
-    },
-    methods:{
-      
     }
 
 }
@@ -38,6 +34,16 @@ export default{
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="row">
+                    <div class="p-4 col-lg-4">
+                        <router-link :to="{name : 'ajoutAlbum' }">
+                            <div class="card bg-dark">
+                                <img v-bind:src=plusImg class=" img-fluid card-img-top">
+                                <div class="card-title">
+                                    <h5 class="card-text text-center text-white py-3">Ajouter Album</h5>
+                                </div>
+                            </div>
+                        </router-link>
+                    </div>
                     <div class="p-4 col-lg-4" v-for="(album, index) in listAlbums" :key="album.id">
                         <Album :nomAlbum="album.nomAlbum" :idAlbum="album.idAlbum" :artist="album.artist" :imageIndex="index+1" :imageAlbum="album.imageAlbum"></Album>
                     </div>
