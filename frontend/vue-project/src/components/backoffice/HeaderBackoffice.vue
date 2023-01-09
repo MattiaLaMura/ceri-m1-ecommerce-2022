@@ -62,6 +62,8 @@ export default{
             </div>
             
             <router-link v-if="admin_name != ''" to="/backoffice/commandes/listeUtilisateurs" class="nav-link text-white px-5 fw-bold" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Liste Commandes</router-link>
+            <router-link to="/" class="nav-link text-white px-5 fw-bold" v-bind:class="{ 'selected': clickedCommandes, 'text-white': !clickedCommandes }" v-on:click="changeTxtColor('commandes')" aria-current="page" >Retour</router-link>
+
         </ul>
         </header>
     </div>
