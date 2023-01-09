@@ -18,7 +18,7 @@ export default {
           this.email = submitEvent.target.elements.email.value;
           this.password = submitEvent.target.elements.password.value;
 
-          const url = this.backendUrl+"/signup?"
+          const url = "https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/signup?"
           const param = 'user_name=' + this.username + '&user_email=' + this.email + '&user_password=' + this.password;
           const response = await axios.post(url+param).catch(function(error){
             console.log("error inscription")

@@ -26,11 +26,11 @@ export default{
     methods:{
         async setAlbumList(){
              // Récupère liste des albums
-            const responseArtist = await fetch(this.backendUrl+"/get/artists");
+            const responseArtist = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/artists");
             const dataArtist = await responseArtist.json();
     
             for(const artist of dataArtist.artists){
-                const responseAlbum = await fetch(this.backendUrl+"/get/albums?artist_id="+artist.artist_id);
+                const responseAlbum = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/albums?artist_id="+artist.artist_id);
                 const dataAlbum = await responseAlbum.json();
                 for(const album of dataAlbum.albums){
                     this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.album_id, artist:artist.artist_name, imageAlbum:album.album_image_url})
@@ -44,7 +44,7 @@ export default{
             } else {
                 console.log(searchedAlbums)
                 for(const album of searchedAlbums){
-                    const responseAlbum = await fetch(this.backendUrl+"/get/album?album_id="+album.objectID);
+                    const responseAlbum = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/album?album_id="+album.objectID);
                     const dataAlbum = await responseAlbum.json();
                     console.log(dataAlbum)
                     

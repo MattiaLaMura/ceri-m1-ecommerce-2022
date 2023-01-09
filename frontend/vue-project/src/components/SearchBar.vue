@@ -18,7 +18,7 @@ export default{
             this.$emit('recherche_terminée', [])
           } else {
             console.log(this.request)
-            const url = this.backendUrl+"/search_engine?"
+            const url = "https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/search_engine?"
             const param = 'word_searched=' + this.request;
             const response = await axios.get(url+param).catch(function(error){
                 console.log("error search")

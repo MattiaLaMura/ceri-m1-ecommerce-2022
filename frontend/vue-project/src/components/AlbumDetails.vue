@@ -15,7 +15,7 @@ export default{
         async ajoutPanier(){
             const token = localStorage.getItem('user_token')
             
-            const urlAjoutPanier =this.backendUrl+"/add/item?"
+            const urlAjoutPanier ="https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/add/item?"
             const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
 
             const responseAjoutPanier= await axios.get(urlAjoutPanier + paramAjourPanier, {
@@ -57,18 +57,18 @@ export default{
         } else this.user_name = '';
 
         // Récupère les données de l'album
-        const responseSongs = await fetch(this.backendUrl+"/get/songs?album_id="+this.idAlbum);
+        const responseSongs = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/songs?album_id="+this.idAlbum);
         const dataSongs = await responseSongs.json();
         
         for(const song of dataSongs.songs){
             this.listeMusique.push({titre:song.song_title})
         }
 
-        const responseArtist = await fetch(this.backendUrl+"/get/artists");
+        const responseArtist = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch(this.backendUrl+"/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch("https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 if(album.album_id == this.idAlbum){

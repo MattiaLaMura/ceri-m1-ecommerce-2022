@@ -17,7 +17,7 @@ export default {
 
           this.name.replace('@', '%40')
 
-          const url =this.backendUrl+"/token_backoffice"
+          const url ="https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/token_backoffice"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,7 +32,7 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentAdmin = this.backendUrl+"/get/current/admin"
+            const urlCurrentAdmin = "https://purplepig-backend-mwjszocsqa-ew.a.run.app"+"/get/current/admin"
 
             const responseCurrentAdmin = await axios.get(urlCurrentAdmin, {
               headers: {
