@@ -6,7 +6,7 @@ export default{
     data(){
         return {
             listAlbums:[],
-            
+            backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
         }
     },
     async created(){
@@ -15,7 +15,7 @@ export default{
     methods:{
         async initCommandes(){
             const token = localStorage.getItem('user_token')
-            const urlCommandes = import.meta.env.VITE_BACKEND_URL+"/get/items"
+            const urlCommandes = backendUrl+"/get/items"
 
             const responseCommandes = await axios.get(urlCommandes, {
                 headers: {
@@ -28,10 +28,10 @@ export default{
             if(responseCommandes.data != null){
                 for(const albumCommandes of responseCommandes.data.items){
                     
-                    const responseArtists = await axios.get(import.meta.env.VITE_BACKEND_URL+"/get/artists")
+                    const responseArtists = await axios.get(backendUrl+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get(backendUrl+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumCommandes.album_id == album.album_id && albumCommandes.paid == true){

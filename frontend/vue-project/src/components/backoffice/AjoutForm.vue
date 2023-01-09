@@ -11,14 +11,15 @@ export default {
       anneeAlbum:"",
       coverAlbum: "",
       listeMusique: "",
-      idArtist: ""
+      idArtist: "",
+      backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
     }
   },
   methods:{
 
     async ajoutArtiste(){
       // Verifie si l'artise n'existe pas déja
-      const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
+      const responseArtist = await fetch(backendUrl+"/get/artists");
       const dataArtist = await responseArtist.json();
       this.idArtist = "";
       for(const artist of dataArtist.artists){
@@ -30,7 +31,7 @@ export default {
         // Ajout du nouvel artiste
         const tokenAdmin = localStorage.getItem('admin_token')
         const param = 'artist_name=' + this.nomArtiste + '&is_active=' + "true";
-        const response = await axios.get(import.meta.env.VITE_BACKEND_URL+"/add/artist?"+param, {
+        const response = await axios.get(backendUrl+"/add/artist?"+param, {
                 headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + tokenAdmin
@@ -42,7 +43,7 @@ export default {
     },
 
     async ajoutAlbum(){
-      const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
+      const responseArtist = await fetch(backendUrl+"/get/artists");
       const dataArtist = await responseArtist.json();
       this.idArtist = "";
       for(const artist of dataArtist.artists){
@@ -53,7 +54,7 @@ export default {
       
       const tokenAdmin = localStorage.getItem('admin_token')
       const param = 'artist_id=' + this.idArtist + '&album_title=' + this.titreAlbum + '&album_year=' + this.anneeAlbum + '&album_cover=' + this.coverAlbum;
-      const response = await axios.get(import.meta.env.VITE_BACKEND_URL+"/add/album?"+param, {
+      const response = await axios.get(backendUrl+"/add/album?"+param, {
                 headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + tokenAdmin
@@ -63,7 +64,7 @@ export default {
 
     async ajoutMusique(nomMusique){
       // Recupere id artiste
-      const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
+      const responseArtist = await fetch(backendUrl+"/get/artists");
       const dataArtist = await responseArtist.json();
       this.idArtist = "";
       for(const artist of dataArtist.artists){
@@ -73,7 +74,7 @@ export default {
       }
       
       // Recupere l'album
-      const responseAlbum = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+this.idArtist);
+      const responseAlbum = await fetch(backendUrl+"/get/albums?artist_id="+this.idArtist);
       const dataAlbum = await responseAlbum.json();
       let idAlbum = "";
       for(const album of dataAlbum.albums){
@@ -86,7 +87,7 @@ export default {
       // Ajout de la musique
       const tokenAdmin = localStorage.getItem('admin_token')
       const param = 'album_id=' + idAlbum + '&song_title=' + nomMusique + '&song_length=' + '0';
-      const response = await axios.get(import.meta.env.VITE_BACKEND_URL+"/add/song?"+param, {
+      const response = await axios.get(backendUrl+"/add/song?"+param, {
                 headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer ' + tokenAdmin

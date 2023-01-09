@@ -4,12 +4,13 @@ export default {
   data() {
     return {
       listeUtilisateurs:[],
+      backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
     }
   },
   async created() {
     // Récupère liste des utilisateurs
     const tokenAdmin = localStorage.getItem('admin_token')
-    const response = await axios.get(import.meta.env.VITE_BACKEND_URL+"/get/users", {
+    const response = await axios.get(backendUrl+"/get/users", {
             headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + tokenAdmin

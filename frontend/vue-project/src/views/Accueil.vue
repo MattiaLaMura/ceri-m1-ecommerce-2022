@@ -13,7 +13,7 @@ import SearchBar from '/src/components/SearchBar.vue';
     <Header/>
     <Carousel/>
     <h2 class="text-white text-center">Liste des albums</h2>
-    <SearchBar/>
+    <!-- <SearchBar/> -->
     <AlbumList/>
   
 </template>

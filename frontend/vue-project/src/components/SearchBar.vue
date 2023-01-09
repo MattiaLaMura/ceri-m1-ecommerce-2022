@@ -5,6 +5,7 @@ export default{
         return {
             listeAlbum:[],
             request:"",
+            backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
         }
     },
     async created(){
@@ -13,14 +14,18 @@ export default{
     methods:{
         async submitSearch(submitEvent){
           this.request = submitEvent.target.elements.request.value;
-          console.log(this.request)
-          const url = import.meta.env.VITE_BACKEND_URL+"/search_engine?"
-          const param = 'word_searched=' + this.request;
-          const response = await axios.get(url+param).catch(function(error){
-            console.log("error search")
-          })
-          console.log(response.data)
-          this.$emit('recherche_terminée', this.listeAlbum)
+          if(this.request == ""){
+            this.$emit('recherche_terminée', [])
+          } else {
+            console.log(this.request)
+            const url = backendUrl+"/search_engine?"
+            const param = 'word_searched=' + this.request;
+            const response = await axios.get(url+param).catch(function(error){
+                console.log("error search")
+            })
+            console.log(response.data.result.hits)
+            this.$emit('recherche_terminée', response.data.result.hits)
+          }
         }
     }
 }
@@ -33,7 +38,7 @@ export default{
                 <div class="search">
                     <i class="fa fa-search"></i>
                     <form id="search-form" @submit.prevent="submitSearch">
-                        <input type="text" class="form-control" name="request" placeholder="Rechercher un album/artiste">
+                        <input type="text" class="form-control" name="request" placeholder="Rechercher un album/artiste/musique">
                         <button type="submit" class="btn text-white">Rechercher</button>
                     </form>
                 </div>

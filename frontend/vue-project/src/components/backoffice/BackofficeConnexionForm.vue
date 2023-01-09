@@ -5,7 +5,8 @@ export default {
   data() {
     return {
       name: "",
-      password:""
+      password:"",
+      backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
     }
   },
   methods:{
@@ -16,7 +17,7 @@ export default {
 
           this.name.replace('@', '%40')
 
-          const url =import.meta.env.VITE_BACKEND_URL+"/token_backoffice"
+          const url =backendUrl+"/token_backoffice"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -31,7 +32,7 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentAdmin = import.meta.env.VITE_BACKEND_URL+"/get/current/admin"
+            const urlCurrentAdmin = backendUrl+"/get/current/admin"
 
             const responseCurrentAdmin = await axios.get(urlCurrentAdmin, {
               headers: {

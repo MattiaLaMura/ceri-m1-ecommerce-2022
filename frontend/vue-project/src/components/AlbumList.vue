@@ -1,37 +1,60 @@
 <script>
 import { processExpression } from '@vue/compiler-core';
 import Album from './Album.vue'
+import SearchBar from './SearchBar.vue';
+
 export default{
     
     components: {
-        Album
+        Album,
+        SearchBar
     },
     data(){
         return {
             listAlbums:[],
+            backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
         }
     },
     async created() {
-        // Récupère liste des albums
-        console.log(import.meta.env.VITE_BACKEND_URL)
-        const responseArtist = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/artists");
-        const dataArtist = await responseArtist.json();
-  
-        for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch(import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
-            const dataAlbum = await responseAlbum.json();
-            for(const album of dataAlbum.albums){
-                this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.album_id, artist:artist.artist_name, imageAlbum:album.album_image_url})
-            }
-        }
+       
+        this.setAlbumList()
 
 
         // this.$on('recherche_terminée', this.handleRecherche)
 
     },
     methods:{
-        handleRecherche(items) {
-            console.log(items) // accès aux données ici
+        async setAlbumList(){
+             // Récupère liste des albums
+            console.log(backendUrl)
+            const responseArtist = await fetch(backendUrl+"/get/artists");
+            const dataArtist = await responseArtist.json();
+    
+            for(const artist of dataArtist.artists){
+                const responseAlbum = await fetch(backendUrl+"/get/albums?artist_id="+artist.artist_id);
+                const dataAlbum = await responseAlbum.json();
+                for(const album of dataAlbum.albums){
+                    this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.album_id, artist:artist.artist_name, imageAlbum:album.album_image_url})
+                }
+            }
+        },
+        async updateAlbumList(searchedAlbums){
+            this.listAlbums = []
+            if(searchedAlbums.length == 0){
+                this.setAlbumList()
+            } else {
+                console.log(searchedAlbums)
+                for(const album of searchedAlbums){
+                    const responseAlbum = await fetch(backendUrl+"/get/album?album_id="+album.objectID);
+                    const dataAlbum = await responseAlbum.json();
+                    console.log(dataAlbum)
+                    
+                    this.listAlbums.push({nomAlbum:album.album_title, idAlbum:album.objectID, artist:album.artist_name, imageAlbum:dataAlbum.album.album_image_url})
+                    
+                    
+                }
+            }
+            
         }
     }
 
@@ -39,6 +62,7 @@ export default{
 </script>
 
 <template>
+    <SearchBar @recherche_terminée="updateAlbumList"/>
     <div class="container pt-3">
         <div class="row">
             <div class="col-2"></div>
