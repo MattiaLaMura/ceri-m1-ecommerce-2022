@@ -112,7 +112,7 @@ resource "google_cloud_run_service" "backend" {
         }
         env {
           name = "SECRET_KEY"
-          value = random_string.random.value
+          value = random_string.random.result
         }
         env {
           name = "ALGOLIA_INDEX_NAME"
