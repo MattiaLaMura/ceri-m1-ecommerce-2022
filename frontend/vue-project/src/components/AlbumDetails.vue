@@ -9,12 +9,13 @@ export default{
     props: {
         idAlbum :{ required: true },
         imageIndex :{ required: false, type: Int32Array },
+        
     },
     methods:{
         async ajoutPanier(){
             const token = localStorage.getItem('user_token')
             
-            const urlAjoutPanier = "http://"+import.meta.env.VITE_BACKEND_URL+"/add/item?"
+            const urlAjoutPanier =backendUrl+"/add/item?"
             const paramAjourPanier = "album_id=" + this.idAlbum + "&paid=false"
 
             const responseAjoutPanier= await axios.get(urlAjoutPanier + paramAjourPanier, {
@@ -45,7 +46,8 @@ export default{
             artist: "",
             imageAlbum: "",
             anneeAlbum: "",
-            listeMusique:[]
+            listeMusique:[],
+            backendUrl :"https://purplepig-backend-mwjszocsqa-ew.a.run.app"
         }
     },
     async created() {
@@ -55,18 +57,18 @@ export default{
         } else this.user_name = '';
 
         // Récupère les données de l'album
-        const responseSongs = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/songs?album_id="+this.idAlbum);
+        const responseSongs = await fetch(backendUrl+"/get/songs?album_id="+this.idAlbum);
         const dataSongs = await responseSongs.json();
         
         for(const song of dataSongs.songs){
             this.listeMusique.push({titre:song.song_title})
         }
 
-        const responseArtist = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/artists");
+        const responseArtist = await fetch(backendUrl+"/get/artists");
         const dataArtist = await responseArtist.json();
   
         for(const artist of dataArtist.artists){
-            const responseAlbum = await fetch("http://"+import.meta.env.VITE_BACKEND_URL+"/get/albums?artist_id="+artist.artist_id);
+            const responseAlbum = await fetch(backendUrl+"/get/albums?artist_id="+artist.artist_id);
             const dataAlbum = await responseAlbum.json();
             for(const album of dataAlbum.albums){
                 if(album.album_id == this.idAlbum){

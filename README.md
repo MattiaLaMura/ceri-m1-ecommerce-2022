@@ -26,6 +26,7 @@ docker build -t backend -f backend.Dockerfile . && docker run -d --name backend 
 # CHANGE THE BACKEND URL IN THE SOURCE CODE : 'http://localhost:8000' or the deployed final url
 
 docker build -t frontend -f frontend.Dockerfile . && docker run -d --name frontend -p 8001:80 frontend
+
 ```
 The **Backend** is now accessible on the following *url*:
 > localhost:8000
