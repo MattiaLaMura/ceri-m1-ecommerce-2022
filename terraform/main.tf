@@ -29,6 +29,14 @@ data "google_secret_manager_secret" "dbname" {
   secret_id = "mysql-database-purplepig"
 }
 
+data "google_secret_manager_secret" "algoia_id" {
+  secret_id = "algolia-purplepig-application-id"
+}
+
+data "google_secret_manager_secret" "algoia_api_key" {
+  secret_id = "algolia-purplepig-api-key"
+}
+
 resource "google_cloud_run_service" "backend" {
   name     = "purplepig-backend"
   location = "europe-west1"
@@ -77,6 +85,28 @@ resource "google_cloud_run_service" "backend" {
               key = "latest"
             }
           }
+        }
+        env {
+          name = "ALGOLIA_APPLICATION_ID"
+          value_from {
+            secret_key_ref{
+              name = data.google_secret_manager_secret.algoia_id.secret_id
+              key = "latest"
+            }
+          }
+        }
+        env {
+          name = "ALGOLIA_API_KEY"
+          value_from {
+            secret_key_ref{
+              name = data.google_secret_manager_secret.algoia_api_key.secret_id
+              key = "latest"
+            }
+          }
+        }
+        env {
+          name = "ALGOLIA_INDEX_NAME"
+          value = "Index"
         }
         ports {
           container_port = 2222
