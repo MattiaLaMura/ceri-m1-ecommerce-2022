@@ -18,7 +18,7 @@ export default {
 
           this.email.replace('@', '%40')
 
-          const url = backendUrl+"/token"
+          const url = this.backendUrl+"/token"
           const headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -40,7 +40,7 @@ export default {
             console.log(token)
 
             // Recupere donnees de l'utilisateur
-            const urlCurrentUser = backendUrl+"/get/current/user"
+            const urlCurrentUser = this.backendUrl+"/get/current/user"
 
             const responseCurrentUser = await axios.get(urlCurrentUser, {
               headers: {

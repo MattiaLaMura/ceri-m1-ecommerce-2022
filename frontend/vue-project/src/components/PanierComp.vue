@@ -13,7 +13,7 @@ export default{
     methods:{
         async initPanier(){
             const token = localStorage.getItem('user_token')
-            const urlPanier = backendUrl+"/get/items"
+            const urlPanier = this.backendUrl+"/get/items"
 
             const responsePanier = await axios.get(urlPanier, {
                 headers: {
@@ -26,10 +26,10 @@ export default{
             if(responsePanier.data != null){
                 for(const albumPanier of responsePanier.data.items){
                     
-                    const responseArtists = await axios.get(backendUrl+"/get/artists")
+                    const responseArtists = await axios.get(this.backendUrl+"/get/artists")
                     
                     for(const artist of responseArtists.data.artists){
-                        const responseAlbum = await axios.get(backendUrl+"/get/albums?artist_id="+artist.artist_id)
+                        const responseAlbum = await axios.get(this.backendUrl+"/get/albums?artist_id="+artist.artist_id)
 
                         for(const album of responseAlbum.data.albums){
                             if(albumPanier.album_id == album.album_id && albumPanier.paid == false){
@@ -43,7 +43,7 @@ export default{
         },
         async enleverPanier(item_id){
             const token = localStorage.getItem('user_token')
-            const urlEnleverPanier = backendUrl+"/remove/item"
+            const urlEnleverPanier = this.backendUrl+"/remove/item"
             const paramEnleverPanier = "?item_id="+ item_id
             const responseEnleverPanier = await axios.get(urlEnleverPanier + paramEnleverPanier, {
                 headers: {
@@ -54,7 +54,7 @@ export default{
         },
         async acheterPanier(){
             const token = localStorage.getItem('user_token')
-            const urlAcheterPanier = backendUrl+"/buy/items"
+            const urlAcheterPanier = this.backendUrl+"/buy/items"
             
             for(const album of this.listAlbums){
                 const paramAcheterPanier = "?item_id="+ album.itemId

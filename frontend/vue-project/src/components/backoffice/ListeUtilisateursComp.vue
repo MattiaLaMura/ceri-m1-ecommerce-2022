@@ -10,7 +10,7 @@ export default {
   async created() {
     // Récupère liste des utilisateurs
     const tokenAdmin = localStorage.getItem('admin_token')
-    const response = await axios.get(backendUrl+"/get/users", {
+    const response = await axios.get(this.backendUrl+"/get/users", {
             headers: {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + tokenAdmin
