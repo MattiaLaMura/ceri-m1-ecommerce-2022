@@ -29,6 +29,20 @@ data "google_secret_manager_secret" "dbname" {
   secret_id = "mysql-database-purplepig"
 }
 
+data "google_secret_manager_secret" "algoia_id" {
+  secret_id = "algolia-purplepig-application-id"
+}
+
+data "google_secret_manager_secret" "algoia_api_key" {
+  secret_id = "algolia-purplepig-api-key"
+}
+
+resource "random_string" "random" {
+  length           = 16
+  special          = true
+  override_special = "/@£$"
+}
+
 resource "google_cloud_run_service" "backend" {
   name     = "purplepig-backend"
   location = "europe-west1"
@@ -78,6 +92,32 @@ resource "google_cloud_run_service" "backend" {
             }
           }
         }
+        env {
+          name = "ALGOLIA_APPLICATION_ID"
+          value_from {
+            secret_key_ref{
+              name = data.google_secret_manager_secret.algoia_id.secret_id
+              key = "latest"
+            }
+          }
+        }
+        env {
+          name = "ALGOLIA_API_KEY"
+          value_from {
+            secret_key_ref{
+              name = data.google_secret_manager_secret.algoia_api_key.secret_id
+              key = "latest"
+            }
+          }
+        }
+        env {
+          name = "SECRET_KEY"
+          value = random_string.random.result
+        }
+        env {
+          name = "ALGOLIA_INDEX_NAME"
+          value = "Index"
+        }
         ports {
           container_port = 2222
         }
@@ -86,7 +126,7 @@ resource "google_cloud_run_service" "backend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "Si tu souhaite redeployer le service avec le meme tag d'image, changer cette string."
+        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string."
       }
     }
   }
@@ -119,7 +159,7 @@ resource "google_cloud_run_service" "frontend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "Si tu souhaite redeployer le service avec le meme tag d'image, changer cette string."
+        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string."
       }
     }
   }
