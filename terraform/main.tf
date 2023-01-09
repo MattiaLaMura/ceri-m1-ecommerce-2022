@@ -126,7 +126,7 @@ resource "google_cloud_run_service" "backend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string."
+        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string !"
       }
     }
   }
@@ -159,7 +159,7 @@ resource "google_cloud_run_service" "frontend" {
     metadata {
       annotations = {
         "autoscaling.knative.dev/maxScale" = "1"
-        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string."
+        "seed" = "Si tu souhaite redeployer le service avec le même tag d'image, changer cette string !"
       }
     }
   }
