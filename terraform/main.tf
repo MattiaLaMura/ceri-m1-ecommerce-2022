@@ -37,6 +37,12 @@ data "google_secret_manager_secret" "algoia_api_key" {
   secret_id = "algolia-purplepig-api-key"
 }
 
+resource "random_string" "random" {
+  length           = 16
+  special          = true
+  override_special = "/@£$"
+}
+
 resource "google_cloud_run_service" "backend" {
   name     = "purplepig-backend"
   location = "europe-west1"
@@ -103,6 +109,10 @@ resource "google_cloud_run_service" "backend" {
               key = "latest"
             }
           }
+        }
+        env {
+          name = "SECRET_KEY"
+          value = random_string.random
         }
         env {
           name = "ALGOLIA_INDEX_NAME"
