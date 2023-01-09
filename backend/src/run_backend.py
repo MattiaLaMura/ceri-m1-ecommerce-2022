@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from globals import TOKEN_EXPIRE_MINUTES
 from src.backend_metadata import DESCRIPTION, TAGS_METADATA
 from src.classes.artist import get_all_artists
-from src.classes.album import get_albums_from_artist
+from src.classes.album import get_albums_from_artist, get_album_from_id
 from src.classes.song import get_songs_from_album
 from src.classes.item import create_item, get_items, buy_item, delete_item, update_item
 from src.classes.token import Token, create_access_token, get_current_user, \
@@ -15,6 +15,7 @@ from src.classes.admin import Admin, create_admin, authentication as admin_authe
 from src.classes.user import authentication, get_password_hash, \
     verify_email, get_users, create_user, User
 from src.database.database import Database
+from src.classes.algolia import index_catalog, search_engine
 
 # Initialize the API
 app = FastAPI(title='Jean Cloud Vinyl Backend',
@@ -149,6 +150,13 @@ def add_song(album_id: int, song_title: str, song_length: int,
     return {'message': 'A new song has been added to the database.'}
 
 
+@app.get('/search_engine', tags=['Search Engine'], status_code=status.HTTP_200_OK)
+def search(word_searched: str):
+    """ This route uses the Algolia search engine. """
+    index_catalog()
+    return {'result': search_engine(word_searched)}
+
+
 @app.get('/add/item', tags=['Add Item'], status_code=status.HTTP_200_OK)
 def add_item(album_id: int, paid: bool, current_user: User = Depends(get_current_user)):
     """ This route adds a new item in the database. """
@@ -176,6 +184,17 @@ def get_albums(artist_id: int):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=str(exc)) from exc
     return {'albums': albums}
+
+
+@app.get('/get/album', tags=['Get Album'], status_code=status.HTTP_200_OK)
+def get_album(album_id: int):
+    """ This route gets an album from the database. """
+    try:
+        album = get_album_from_id(album_id)
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=str(exc)) from exc
+    return {'album': album}
 
 
 @app.get('/get/songs', tags=['Get Songs'], status_code=status.HTTP_200_OK)

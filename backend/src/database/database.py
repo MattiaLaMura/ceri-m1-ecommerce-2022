@@ -15,7 +15,7 @@ class Database:
         self.connection = sql.connect(user=Settings().dict()['user'],
                                       password=Settings().dict()['password'],
                                       host=Settings().dict()['host'],
-                                      port=Settings().dict()['port'],
+                                      port=Settings().dict()['mysql_port'],
                                       database=Settings().dict()['dbname'])
         # Create a cursor to perform database operations
         self.cursor = self.connection.cursor(dictionary=True)
@@ -59,6 +59,15 @@ class Database:
                             f'"{album_title}", "{album_year}", "{album_cover}");')
         self.connection.commit()
 
+    def get_all_albums(self):
+        """ This method gets all the albums.
+
+        :return: The list of all the albums
+        :rtype: list[dict]
+        """
+        self.cursor.execute('SELECT * from album')
+        return self.cursor.fetchall()
+
     def get_albums(self, artist_id: str):
         """ This method gets all the albums of an artist.
 
@@ -71,6 +80,18 @@ class Database:
             'SELECT * from album WHERE artist_id=%s', (artist_id,))
         return self.cursor.fetchall()
 
+    def get_album(self, album_id: str):
+        """ This method gets an album.
+
+        :param album_id: The album id
+        :type album_id: str
+        :return: The album
+        :rtype: dict
+        """
+        self.cursor.execute(
+            'SELECT * from album WHERE album_id=%s', (album_id,))
+        return self.cursor.fetchone()
+
     # Song Table
     def add_song(self, album_id, song_title, song_length):
         """ This method adds a new song. """
@@ -78,6 +99,15 @@ class Database:
                             'VALUES ((select album_id FROM album WHERE album_id = '
                             f'{album_id}), "{song_title}", {song_length});')
         self.connection.commit()
+
+    def get_all_songs(self):
+        """ This method gets all the songs.
+
+        :return: The list of all the songs
+        :rtype: list[dict]
+        """
+        self.cursor.execute('SELECT * from song')
+        return self.cursor.fetchall()
 
     def get_songs(self, album_id: str):
         """ This method gets all the songs of an album.

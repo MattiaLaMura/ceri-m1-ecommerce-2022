@@ -9,6 +9,10 @@ TAGS_METADATA = [
         'description': 'This route **checks** if the *Backend is running*.',
     },
     {
+        'name': 'Search Engine',
+        'description': 'This route uses the **Algolia search engine**.'
+    },
+    {
         'name': 'Create Database',
         'description': 'This route **creates** the *Backend database*.',
     },
@@ -67,6 +71,10 @@ TAGS_METADATA = [
     {
         'name': 'Get Albums',
         'description': 'This route **gets** *all the albums* of an *artist* from the database.',
+    },
+    {
+        'name': 'Get Album',
+        'description': 'This route **gets** an *album* from the database.',
     },
     {
         'name': 'Get Songs',

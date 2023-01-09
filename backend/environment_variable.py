@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     user: str
     password: str
     host: str
-    port: str
+    mysql_port: str
     dbname: str
     secret_key: str
+    algolia_application_id: str
+    algolia_api_key: str
+    algolia_index_name: str
