@@ -14,8 +14,7 @@ class Database:
         # Open connection
         self.connection = sql.connect(user=Settings().dict()['user'],
                                       password=Settings().dict()['password'],
-                                      # host=Settings().dict()['host'],
-                                      unix_socket="/cloudsql/ceri-m1-ecommerce-2022:europe-west1:mysql-primary",
+                                      host=Settings().dict()['host'],
                                       port=Settings().dict()['mysql_port'],
                                       database=Settings().dict()['dbname'])
         # Create a cursor to perform database operations
@@ -92,6 +91,12 @@ class Database:
         self.cursor.execute(
             'SELECT * from album WHERE album_id=%s', (album_id,))
         return self.cursor.fetchone()
+
+    def delete_album(self, album_id: int):
+        """ This method removes an album from the database."""
+        self.cursor.execute(f'DELETE from album WHERE album_id = {album_id}')
+        self.connection.commit()
+        return self.cursor.rowcount
 
     # Song Table
     def add_song(self, album_id, song_title, song_length):

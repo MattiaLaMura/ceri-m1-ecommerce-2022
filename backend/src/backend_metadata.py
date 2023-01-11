@@ -81,6 +81,10 @@ TAGS_METADATA = [
         'description': 'This route **gets** *all the songs* of an *album* from the database.',
     },
     {
+        'name': 'Remove Album',
+        'description': 'This route allows the *user* to **remove** an *album* from the database.',
+    },
+    {
         'name': 'Get Items',
         'description': 'This route **gets** *all the items* of an *user* from the database.',
     },

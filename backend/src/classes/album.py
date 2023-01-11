@@ -49,3 +49,13 @@ def get_album_from_id(album_id):
     album = my_database.get_album(str(album_id))
     my_database.close()
     return Album(**album)
+
+
+def delete_album(album_id: int):
+    """ This method removes an album from the database."""
+    my_database = Database()
+    album_deleted = my_database.delete_album(album_id)
+    my_database.close()
+    if album_deleted == 1:
+        return True
+    return False
