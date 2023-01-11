@@ -14,7 +14,8 @@ class Database:
         # Open connection
         self.connection = sql.connect(user=Settings().dict()['user'],
                                       password=Settings().dict()['password'],
-                                      host=Settings().dict()['host'],
+                                      # host=Settings().dict()['host'],
+                                      unix_socket="/cloudsql/ceri-m1-ecommerce-2022:europe-west1:mysql-primary",
                                       port=Settings().dict()['mysql_port'],
                                       database=Settings().dict()['dbname'])
         # Create a cursor to perform database operations
