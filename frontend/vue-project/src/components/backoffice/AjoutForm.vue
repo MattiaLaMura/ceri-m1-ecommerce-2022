@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'
+import {useToast} from 'vue-toast-notification';
 export default {
   data() {
     return {
@@ -107,6 +108,12 @@ export default {
       for(let i = 0; i < this.listeMusiqueForm.length; i++){
         await this.ajoutMusique(this.listeMusiqueForm[i].titreMusique)
       }
+      useToast().success('Album ajouté', {
+              position: 'top',
+              dismissible:'true',
+              duration:'5000'
+          });
+      this.$refs.formAjout.reset()
     },
     
     ajoutInputMusique(){
@@ -127,7 +134,7 @@ export default {
 <template>
     
   <h2 class="text-center text-white">Ajout Album</h2>
-  <form @submit.prevent="ajouter">
+  <form ref="formAjout" @submit.prevent="ajouter">
       <div class="form-group p-2 text-white">
           <label>Artiste</label>
           <input class="form-control" name="nomArtiste" placeholder="Entrez le nom de l'artiste">
